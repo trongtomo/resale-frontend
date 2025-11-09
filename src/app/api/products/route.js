@@ -14,10 +14,16 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get('page') || '1')
-    const pageSize = parseInt(searchParams.get('pageSize') || '12')
+    const pageSize = parseInt(searchParams.get('pageSize') || '1000')
+    const categorySlug = searchParams.get('category')
     
     const fileData = await readFile(productsFile, 'utf8')
-    const { products } = JSON.parse(fileData)
+    let { products } = JSON.parse(fileData)
+    
+    // Filter by category if provided
+    if (categorySlug) {
+      products = products.filter(p => p.category?.slug === categorySlug)
+    }
     
     // Pagination
     const startIndex = (page - 1) * pageSize
@@ -84,6 +90,7 @@ export async function POST(request) {
       category: body.category || null,
       brand: body.brand || null,
       images: body.images || [],
+      publishedAt: new Date().toISOString(),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     }

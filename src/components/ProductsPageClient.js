@@ -94,46 +94,27 @@ function ProductsPageClientContent({ initialProducts = [], initialPagination = {
       setLoading(true)
       
       try {
-        // Fetch category data
+        // Fetch category data and products
         if (categorySlug) {
           const categoriesData = await api.getAllCategories()
           const foundCategory = categoriesData.categories?.find(cat => cat.slug === categorySlug)
           setCategory(foundCategory)
           
-          // Check if this is a parent category (has children)
-          if (foundCategory?.children && foundCategory.children.length > 0) {
-            // Fetch products from all subcategories
-            const productsData = await api.getProductsByParentCategory(categorySlug)
-            let filteredProducts = productsData.products || []
-            
-            // Apply filters from URL parameters
-            filteredProducts = applyFilters(filteredProducts, {
-              brand: brandSlug,
-              priceMin,
-              priceMax,
-              priceRange,
-              sortBy
-            })
-            
-            setProducts(filteredProducts)
-            setPagination({ page: 1, pageCount: 1, total: filteredProducts.length })
-          } else {
-            // Fetch products for this specific category
-            const productsData = await api.getProductsByCategory(categorySlug)
-            let filteredProducts = productsData.products || []
-            
-            // Apply filters from URL parameters
-            filteredProducts = applyFilters(filteredProducts, {
-              brand: brandSlug,
-              priceMin,
-              priceMax,
-              priceRange,
-              sortBy
-            })
-            
-            setProducts(filteredProducts)
-            setPagination({ page: 1, pageCount: 1, total: filteredProducts.length })
-          }
+          // Fetch products for this category
+          const productsData = await api.getProductsByCategory(categorySlug)
+          let filteredProducts = productsData.products || []
+          
+          // Apply filters from URL parameters
+          filteredProducts = applyFilters(filteredProducts, {
+            brand: brandSlug,
+            priceMin,
+            priceMax,
+            priceRange,
+            sortBy
+          })
+          
+          setProducts(filteredProducts)
+          setPagination({ page: 1, pageCount: 1, total: filteredProducts.length })
         } else {
           // No category - show all products
           setCategory(null)
@@ -196,14 +177,7 @@ function ProductsPageClientContent({ initialProducts = [], initialPagination = {
       // Fetch products based on category and apply filters
       let data
       if (categorySlug) {
-        const categoriesData = await api.getAllCategories()
-        const foundCategory = categoriesData.categories?.find(cat => cat.slug === categorySlug)
-        
-        if (foundCategory?.children && foundCategory.children.length > 0) {
-          data = await api.getProductsByParentCategory(categorySlug)
-        } else {
-          data = await api.getProductsByCategory(categorySlug)
-        }
+        data = await api.getProductsByCategory(categorySlug)
       } else {
         data = await api.getAllProducts()
       }

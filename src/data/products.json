@@ -8,14 +8,11 @@
       "description": "High-quality running shoes designed for comfort and performance. Perfect for daily runs and long-distance training.",
       "shortDescription": "High-quality running shoes for daily runs",
       "status": "active",
-      "product_status": "active",
-      "SKU": "PRS-001",
-      "stock_quantity": 50,
       "publishedAt": "2024-01-15T10:00:00Z",
       "category": {
         "documentId": "cat1",
-        "name": "Running",
-        "slug": "running"
+        "name": "Shoes",
+        "slug": "shoes"
       },
       "brand": {
         "documentId": "brand1",
@@ -34,14 +31,11 @@
       "description": "Timeless classic sneakers that never go out of style. Comfortable and versatile for any occasion.",
       "shortDescription": "Timeless classic sneakers for any occasion",
       "status": "active",
-      "product_status": "active",
-      "SKU": "CS-002",
-      "stock_quantity": 75,
       "publishedAt": "2024-01-16T10:00:00Z",
       "category": {
-        "documentId": "cat2",
-        "name": "Sneakers",
-        "slug": "sneaker"
+        "documentId": "cat1",
+        "name": "Shoes",
+        "slug": "shoes"
       },
       "brand": {
         "documentId": "brand2",
@@ -60,9 +54,6 @@
       "description": "Premium wireless headphones with noise cancellation. Perfect for music lovers and professionals.",
       "shortDescription": "Premium wireless headphones with noise cancellation",
       "status": "active",
-      "product_status": "active",
-      "SKU": "WH-003",
-      "stock_quantity": 30,
       "publishedAt": "2024-01-17T10:00:00Z",
       "category": {
         "documentId": "cat3",
@@ -86,9 +77,6 @@
       "description": "Feature-rich smartwatch with fitness tracking, notifications, and long battery life.",
       "shortDescription": "Feature-rich smartwatch with fitness tracking",
       "status": "active",
-      "product_status": "active",
-      "SKU": "SW-004",
-      "stock_quantity": 25,
       "publishedAt": "2024-01-18T10:00:00Z",
       "category": {
         "documentId": "cat3",
@@ -112,9 +100,6 @@
       "description": "Premium cotton t-shirt with modern design. Comfortable fit and durable quality.",
       "shortDescription": "Premium cotton t-shirt with modern design",
       "status": "active",
-      "product_status": "active",
-      "SKU": "DT-005",
-      "stock_quantity": 100,
       "publishedAt": "2024-01-19T10:00:00Z",
       "category": {
         "documentId": "cat4",
@@ -138,12 +123,9 @@
       "description": "Stylish leather backpack with multiple compartments. Perfect for work and travel.",
       "shortDescription": "Stylish leather backpack for work and travel",
       "status": "active",
-      "product_status": "active",
-      "SKU": "LB-006",
-      "stock_quantity": 40,
       "publishedAt": "2024-01-20T10:00:00Z",
       "category": {
-        "documentId": "cat5",
+        "documentId": "cat3",
         "name": "Accessories",
         "slug": "accessories"
       },
@@ -155,6 +137,33 @@
       "images": [],
       "createdAt": "2024-01-20T10:00:00Z",
       "updatedAt": "2025-11-09T03:39:07.984Z"
+    },
+    {
+      "documentId": "7",
+      "name": "Test",
+      "slug": "test",
+      "price": 76,
+      "description": "test",
+      "shortDescription": "test",
+      "status": "active",
+      "category": {
+        "documentId": "cat1",
+        "name": "Shoes",
+        "slug": "shoes"
+      },
+      "brand": {
+        "documentId": "brand4",
+        "name": "LeatherCraft",
+        "slug": "leathercraft",
+        "description": "Handcrafted leather goods",
+        "createdAt": "2024-01-08T10:00:00Z",
+        "updatedAt": "2024-01-08T10:00:00Z"
+      },
+      "images": [
+        "/images/67f7d1f3391b199165e4b5f620493504.jpg"
+      ],
+      "createdAt": "2025-11-09T03:43:38.629Z",
+      "updatedAt": "2025-11-09T03:43:38.629Z"
     }
   ]
 }

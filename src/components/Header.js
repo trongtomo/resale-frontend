@@ -5,12 +5,10 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Cart from './Cart'
 import CartIcon from './CartIcon'
-import CategoryDropdown from './CategoryDropdown'
 import MobileNavigation from './MobileNavigation'
 import SearchBar from './SearchBar'
 
 export default function Header() {
-  const [activeDropdown, setActiveDropdown] = useState(null)
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -19,7 +17,7 @@ export default function Header() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        // Get all categories for the Products dropdown
+        // Get all categories for the main menu
         const data = await api.getAllCategories()
         setCategories(data.categories || [])
       } catch (error) {
@@ -31,14 +29,6 @@ export default function Header() {
 
     fetchCategories()
   }, [])
-
-  const handleDropdownToggle = (dropdownName) => {
-    setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName)
-  }
-
-  const handleDropdownClose = () => {
-    setActiveDropdown(null)
-  }
 
   const handleCartToggle = () => {
     setIsCartOpen(!isCartOpen)
@@ -70,52 +60,20 @@ export default function Header() {
               Home
             </Link>
             
-            {/* Products Dropdown */}
-            <div className="relative group">
-              <Link 
-                href="/products" 
-                className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center"
-                onMouseEnter={() => handleDropdownToggle('products')}
-              >
-                Products
-                <svg
-                  className={`ml-1 h-4 w-4 transition-transform ${activeDropdown === 'products' ? 'rotate-180' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            {/* Categories as direct menu items */}
+            {loading ? (
+              <div className="text-gray-500 px-3 py-2 text-sm">Loading...</div>
+            ) : (
+              categories.map((category) => (
+                <Link
+                  key={category.slug}
+                  href={`/products?category=${category.slug}`}
+                  className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </Link>
-
-              {activeDropdown === 'products' && (
-                <div 
-                  className="absolute left-0 z-50 mt-1 w-56 origin-top-left rounded-lg bg-white shadow-lg border border-gray-200"
-                  onMouseLeave={handleDropdownClose}
-                >
-                  <div className="py-2">
-                    {loading ? (
-                      <div className="px-4 py-2 text-sm text-gray-500">Loading...</div>
-                    ) : categories.length > 0 ? (
-                      <div className="grid grid-cols-1">
-                        {categories.map((category) => (
-                          <Link
-                            key={category.slug}
-                            href={`/products?category=${category.slug}`}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                            onClick={handleDropdownClose}
-                          >
-                            {category.name}
-                          </Link>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="px-4 py-2 text-sm text-gray-500">No categories available</div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
+                  {category.name}
+                </Link>
+              ))
+            )}
 
             <Link 
               href="/blog" 

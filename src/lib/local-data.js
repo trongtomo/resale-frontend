@@ -19,14 +19,7 @@ export const localData = {
     
     // Apply category filter
     if (filters.category) {
-      if (filters.category === 'shoes') {
-        // Special case: shoes includes running and sneaker
-        products = products.filter(p => 
-          p.category?.slug === 'running' || p.category?.slug === 'sneaker'
-        )
-      } else {
-        products = products.filter(p => p.category?.slug === filters.category)
-      }
+      products = products.filter(p => p.category?.slug === filters.category)
     }
     
     // Apply brand filter
@@ -147,19 +140,17 @@ export const localData = {
   
   async getMainCategories() {
     await delay(50)
-    // Return categories that have no parent (main categories)
-    const mainCategories = categoriesData.categories.filter(cat => !cat.parent)
+    // Return all categories (flat structure)
     return {
-      categories: mainCategories
+      categories: categoriesData.categories
     }
   },
   
   async getSubcategories(parentSlug) {
     await delay(50)
-    // Return categories that have the specified parent
-    const subcategories = categoriesData.categories.filter(cat => cat.parent?.slug === parentSlug)
+    // Return empty array (no subcategories in flat structure)
     return {
-      categories: subcategories
+      categories: []
     }
   },
   

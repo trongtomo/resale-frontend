@@ -11,7 +11,7 @@ export default function MobileNavigation({ isOpen, onClose }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        // Get all categories for the Products dropdown
+        // Get all categories for the main menu
         const data = await api.getAllCategories()
         setCategories(data.categories || [])
       } catch (error) {
@@ -53,32 +53,21 @@ export default function MobileNavigation({ isOpen, onClose }) {
               Home
             </Link>
             
-            <div>
-              <Link 
-                href="/products" 
-                className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-base font-medium transition-colors"
-                onClick={onClose}
-              >
-                Products
-              </Link>
-              
-              {loading ? (
-                <div className="text-gray-500 px-3 py-2 text-sm ml-4">Loading categories...</div>
-              ) : categories.length > 0 ? (
-                <div className="ml-4 mt-2 space-y-1">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.slug}
-                      href={`/products?category=${category.slug}`}
-                      className="block text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm transition-colors"
-                      onClick={onClose}
-                    >
-                      {category.name}
-                    </Link>
-                  ))}
-                </div>
-              ) : null}
-            </div>
+            {/* Categories as direct menu items */}
+            {loading ? (
+              <div className="text-gray-500 px-3 py-2 text-base">Loading categories...</div>
+            ) : (
+              categories.map((category) => (
+                <Link
+                  key={category.slug}
+                  href={`/products?category=${category.slug}`}
+                  className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-base font-medium transition-colors"
+                  onClick={onClose}
+                >
+                  {category.name}
+                </Link>
+              ))
+            )}
             
             <Link 
               href="/blog" 

@@ -26,16 +26,11 @@ export default function EditProductPage() {
   })
 
   useEffect(() => {
-    // Load categories and brands
+    // Load categories
     fetch('/api/categories')
       .then(res => res.json())
       .then(data => setCategories(data.categories || []))
       .catch(err => console.error('Error loading categories:', err))
-
-    fetch('/api/brands')
-      .then(res => res.json())
-      .then(data => setBrands(data.brands || []))
-      .catch(err => console.error('Error loading brands:', err))
 
     // Load product data
     if (productId) {
@@ -61,6 +56,18 @@ export default function EditProductPage() {
         .finally(() => setLoading(false))
     }
   }, [productId])
+
+  // Load brands filtered by selected category
+  useEffect(() => {
+    if (formData.category) {
+      fetch(`/api/brands?category=${formData.category}`)
+        .then(res => res.json())
+        .then(data => setBrands(data.brands || []))
+        .catch(err => console.error('Error loading brands:', err))
+    } else {
+      setBrands([])
+    }
+  }, [formData.category])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -265,22 +272,26 @@ export default function EditProductPage() {
 
             <div>
               <label htmlFor="brand" className="block text-sm font-medium text-gray-700 mb-2">
-                Brand
+                Brand {formData.category ? '' : '(Select category first)'}
               </label>
               <select
                 id="brand"
                 name="brand"
                 value={formData.brand}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                disabled={!formData.category}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
               >
-                <option value="">Select a brand</option>
+                <option value="">{formData.category ? 'Select a brand' : 'Select category first'}</option>
                 {brands.map(brand => (
                   <option key={brand.documentId} value={brand.documentId}>
                     {brand.name}
                   </option>
                 ))}
               </select>
+              {formData.category && brands.length === 0 && (
+                <p className="mt-1 text-sm text-gray-500">No brands available for this category. Create a product with a brand first.</p>
+              )}
             </div>
 
             <div>

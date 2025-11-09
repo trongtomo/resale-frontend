@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server'
-import { writeFile } from 'fs/promises'
-import path from 'path'
-import { randomBytes } from 'crypto'
+import { uploadToCloudinary } from '@/lib/cloudinary'
 
 export async function POST(request) {
   try {
     const formData = await request.formData()
     const file = formData.get('file')
+    const folder = formData.get('folder') || 'resale-products' // Optional folder parameter
     
     if (!file) {
       return NextResponse.json(
@@ -24,47 +23,32 @@ export async function POST(request) {
       )
     }
     
-    // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024 // 5MB
+    // Validate file size (max 10MB for Cloudinary)
+    const maxSize = 10 * 1024 * 1024 // 10MB
     if (file.size > maxSize) {
       return NextResponse.json(
-        { error: 'File too large. Maximum size is 5MB.' },
+        { error: 'File too large. Maximum size is 10MB.' },
         { status: 400 }
       )
     }
     
-    // Generate unique filename
-    const ext = path.extname(file.name)
-    const uniqueId = randomBytes(16).toString('hex')
-    const filename = `${uniqueId}${ext}`
-    
-    // Determine upload directory based on file type
-    const uploadDir = path.join(process.cwd(), 'public', 'images')
-    
-    // Create directory if it doesn't exist
-    const fs = require('fs')
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true })
-    }
-    
-    // Save file
-    const filePath = path.join(uploadDir, filename)
+    // Convert file to buffer
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
     
-    await writeFile(filePath, buffer)
-    
-    // Return the public URL
-    const publicUrl = `/images/${filename}`
+    // Upload to Cloudinary
+    const result = await uploadToCloudinary(buffer, folder)
     
     return NextResponse.json({
-      url: publicUrl,
-      filename: filename
+      url: result.url,
+      public_id: result.public_id,
+      width: result.width,
+      height: result.height
     })
   } catch (error) {
-    console.error('Error uploading file:', error)
+    console.error('Error uploading file to Cloudinary:', error)
     return NextResponse.json(
-      { error: 'Failed to upload file' },
+      { error: error.message || 'Failed to upload file' },
       { status: 500 }
     )
   }

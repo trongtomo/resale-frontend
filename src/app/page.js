@@ -1,6 +1,5 @@
 import AddToCartButton from '@/components/AddToCartButton'
 import MarkdownRenderer from '@/components/MarkdownRenderer'
-import PersonalizedContent from '@/components/PersonalizedContent'
 import { api } from '@/lib/simple-api'
 import { formatCurrency, formatDate, truncateText } from '@/utils/format'
 import Link from 'next/link'
@@ -26,11 +25,6 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* Personalized Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <PersonalizedContent />
-      </div>
-
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">

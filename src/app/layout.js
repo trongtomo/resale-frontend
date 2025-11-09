@@ -2,7 +2,6 @@ import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import LoadingBar from '@/components/LoadingBar'
 import ScrollToTop from '@/components/ScrollToTop'
-import WelcomeBanner from '@/components/WelcomeBanner'
 import { CartProvider } from '@/contexts/CartContext'
 import '@/lib/loadingBar'; // Initialize loading bar
 import '@/styles/nprogress.css'
@@ -20,7 +19,6 @@ export default function RootLayout({ children }) {
         <CartProvider>
           <LoadingBar />
           <Header />
-          <WelcomeBanner />
           <main className="flex-1">
             {children}
           </main>

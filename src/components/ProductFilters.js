@@ -23,8 +23,15 @@ export default function ProductFilters({
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const data = await api.getBrands()
-        setAllBrands(data.brands || [])
+        // Fetch brands filtered by category
+        if (categorySlug) {
+          const data = await api.getBrands(categorySlug)
+          setAllBrands(data.data || [])
+        } else {
+          // No category - show all brands
+          const data = await api.getBrands()
+          setAllBrands(data.brands || [])
+        }
       } catch (error) {
         console.error('Error fetching brands:', error)
       } finally {
@@ -35,7 +42,7 @@ export default function ProductFilters({
     fetchBrands()
   }, [categorySlug])
 
-  // Show all brands - let the backend handle filtering
+  // Show brands filtered by category
   const availableBrands = allBrands
 
   const handleFilterChange = (key, value) => {

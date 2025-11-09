@@ -2,9 +2,9 @@
 
 import { stopLoading } from '@/lib/loadingBar'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 
-export default function LoadingBar() {
+function LoadingBarContent() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -14,4 +14,12 @@ export default function LoadingBar() {
   }, [pathname, searchParams])
 
   return null
+}
+
+export default function LoadingBar() {
+  return (
+    <Suspense fallback={null}>
+      <LoadingBarContent />
+    </Suspense>
+  )
 }

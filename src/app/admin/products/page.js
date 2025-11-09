@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { formatCurrency } from '@/utils/format'
+import DeleteConfirmModal from '@/components/DeleteConfirmModal'
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [deleteModal, setDeleteModal] = useState({ isOpen: false, product: null })
 
   useEffect(() => {
     loadProducts()
@@ -13,7 +16,7 @@ export default function AdminProductsPage() {
 
   const loadProducts = async () => {
     try {
-      const response = await fetch('/api/products')
+      const response = await fetch('/api/products?pageSize=1000')
       const data = await response.json()
       setProducts(data.data || [])
     } catch (error) {
@@ -24,10 +27,6 @@ export default function AdminProductsPage() {
   }
 
   const handleDelete = async (id) => {
-    if (!confirm('Are you sure you want to delete this product?')) {
-      return
-    }
-
     try {
       const response = await fetch(`/api/products/${id}`, {
         method: 'DELETE'
@@ -38,11 +37,64 @@ export default function AdminProductsPage() {
       }
 
       loadProducts()
+      setDeleteModal({ isOpen: false, product: null })
     } catch (error) {
       console.error('Error deleting product:', error)
       alert('Failed to delete product')
     }
   }
+
+  const handleDisable = async (product) => {
+    try {
+      const newStatus = product.status === 'active' ? 'inactive' : 'active'
+      const response = await fetch(`/api/products/${product.documentId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ...product,
+          status: newStatus
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update product status')
+      }
+
+      // Update local state immediately
+      setProducts(prevProducts =>
+        prevProducts.map(p =>
+          p.documentId === product.documentId
+            ? { ...p, status: newStatus }
+            : p
+        )
+      )
+    } catch (error) {
+      console.error('Error updating product status:', error)
+      alert('Failed to update product status')
+    }
+  }
+
+  const openDeleteModal = (product) => {
+    setDeleteModal({ isOpen: true, product })
+  }
+
+  const closeDeleteModal = () => {
+    setDeleteModal({ isOpen: false, product: null })
+  }
+
+  // Group products by category
+  const productsByCategory = products.reduce((acc, product) => {
+    const categoryName = product.category?.name || 'Uncategorized'
+    if (!acc[categoryName]) {
+      acc[categoryName] = []
+    }
+    acc[categoryName].push(product)
+    return acc
+  }, {})
+
+  const categories = Object.keys(productsByCategory).sort()
 
   if (loading) {
     return (
@@ -67,82 +119,103 @@ export default function AdminProductsPage() {
           </Link>
         </div>
 
-        <div className="bg-white shadow rounded-lg overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Price
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Category
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {products.length === 0 ? (
-                <tr>
-                  <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
-                    No products found. Create your first product!
-                  </td>
-                </tr>
-              ) : (
-                products.map((product) => (
-                  <tr key={product.documentId}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{product.name}</div>
-                      <div className="text-sm text-gray-500">{product.slug}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR',
-                        minimumFractionDigits: 0
-                      }).format(product.price)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {product.category?.name || '-'}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        product.status === 'active'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}>
-                        {product.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <Link
-                        href={`/admin/products/${product.documentId}/edit`}
-                        className="text-blue-600 hover:text-blue-900 mr-4"
-                      >
-                        Edit
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(product.documentId)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+        {categories.length === 0 ? (
+          <div className="bg-white shadow rounded-lg p-6 text-center">
+            <p className="text-gray-500">No products found. Create your first product!</p>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {categories.map((categoryName) => (
+              <div key={categoryName} className="bg-white shadow rounded-lg overflow-hidden">
+                <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                  <h2 className="text-xl font-semibold text-gray-900">{categoryName}</h2>
+                  <p className="text-sm text-gray-500 mt-1">
+                    {productsByCategory[categoryName].length} product{productsByCategory[categoryName].length !== 1 ? 's' : ''}
+                  </p>
+                </div>
+                
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Name
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Price
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Brand
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Status
+                      </th>
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {productsByCategory[categoryName].map((product) => (
+                      <tr key={product.documentId}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">{product.name}</div>
+                          <div className="text-sm text-gray-500">{product.slug}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {formatCurrency(product.price)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {product.brand?.name || '-'}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            product.status === 'active'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-gray-100 text-gray-800'
+                          }`}>
+                            {product.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
+                          <Link
+                            href={`/admin/products/${product.documentId}/edit`}
+                            className="text-blue-600 hover:text-blue-900"
+                          >
+                            Edit
+                          </Link>
+                          <button
+                            onClick={() => handleDisable(product)}
+                            className={`${
+                              product.status === 'active'
+                                ? 'text-yellow-600 hover:text-yellow-900'
+                                : 'text-green-600 hover:text-green-900'
+                            }`}
+                          >
+                            {product.status === 'active' ? 'Disable' : 'Enable'}
+                          </button>
+                          <button
+                            onClick={() => openDeleteModal(product)}
+                            className="text-red-600 hover:text-red-900"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <DeleteConfirmModal
+          isOpen={deleteModal.isOpen}
+          onClose={closeDeleteModal}
+          onConfirm={() => handleDelete(deleteModal.product?.documentId)}
+          productName={deleteModal.product?.name}
+        />
       </div>
     </div>
   )
 }
-

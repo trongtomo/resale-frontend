@@ -1,9 +1,9 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
+import { useCallback, Suspense } from 'react'
 
-export default function Pagination({ currentPage, totalPages, onPageChange }) {
+function PaginationContent({ currentPage, totalPages, onPageChange }) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -92,5 +92,17 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         Next
       </button>
     </div>
+  )
+}
+
+export default function Pagination({ currentPage, totalPages, onPageChange }) {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center space-x-2 mt-8">
+        <span className="text-gray-400 text-sm">Loading...</span>
+      </div>
+    }>
+      <PaginationContent currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
+    </Suspense>
   )
 }

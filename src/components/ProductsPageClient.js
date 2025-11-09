@@ -5,7 +5,7 @@ import { getContextText, getPageTitle } from '@/utils/contextText'
 import { formatCurrency, truncateText } from '@/utils/format'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import AddToCartButton from './AddToCartButton'
 import Breadcrumb from './Breadcrumb'
 import Pagination from './Pagination'
@@ -67,7 +67,7 @@ const applyFilters = (products, filterParams) => {
   return filteredProducts
 }
 
-export default function ProductsPageClient({ initialProducts = [], initialPagination = { page: 1, pageCount: 1, total: 0 }, initialCategory = null }) {
+function ProductsPageClientContent({ initialProducts = [], initialPagination = { page: 1, pageCount: 1, total: 0 }, initialCategory = null }) {
   const searchParams = useSearchParams()
   const [products, setProducts] = useState(initialProducts)
   const [pagination, setPagination] = useState(initialPagination)
@@ -325,5 +325,25 @@ export default function ProductsPageClient({ initialProducts = [], initialPagina
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ProductsPageClient({ initialProducts = [], initialPagination = { page: 1, pageCount: 1, total: 0 }, initialCategory = null }) {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center py-12">
+            <p className="text-gray-500">Loading products...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <ProductsPageClientContent 
+        initialProducts={initialProducts} 
+        initialPagination={initialPagination} 
+        initialCategory={initialCategory} 
+      />
+    </Suspense>
   )
 }

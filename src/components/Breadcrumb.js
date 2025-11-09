@@ -2,8 +2,9 @@
 
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
-export default function Breadcrumb({ category, subcategory }) {
+function BreadcrumbContent({ category, subcategory }) {
   const searchParams = useSearchParams()
   const currentCategory = searchParams.get('category')
 
@@ -51,5 +52,17 @@ export default function Breadcrumb({ category, subcategory }) {
         </div>
       ))}
     </nav>
+  )
+}
+
+export default function Breadcrumb({ category, subcategory }) {
+  return (
+    <Suspense fallback={
+      <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
+        <span className="text-gray-400">Loading...</span>
+      </nav>
+    }>
+      <BreadcrumbContent category={category} subcategory={subcategory} />
+    </Suspense>
   )
 }

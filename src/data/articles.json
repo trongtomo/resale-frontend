@@ -1,0 +1,38 @@
+{
+  "articles": [
+    {
+      "id": "art1",
+      "documentId": "art1",
+      "title": "Welcome to Our Store",
+      "slug": "welcome-to-our-store",
+      "content": "# Welcome to Our Store\n\nWe're excited to have you here! This is a sample article to demonstrate our blog functionality.",
+      "description": "Introduction to our store and what we offer",
+      "createdAt": "2024-01-01T10:00:00Z",
+      "updatedAt": "2024-01-01T10:00:00Z",
+      "publishedAt": "2024-01-01T10:00:00Z"
+    },
+    {
+      "id": "art2",
+      "documentId": "art2",
+      "title": "How to Choose the Right Running Shoes",
+      "slug": "how-to-choose-running-shoes",
+      "content": "# How to Choose the Right Running Shoes\n\nChoosing the right running shoes is essential for comfort and performance. Here are some tips:\n\n1. Know your foot type\n2. Consider your running style\n3. Try before you buy\n4. Replace regularly",
+      "description": "A guide to selecting the perfect running shoes",
+      "createdAt": "2024-01-02T10:00:00Z",
+      "updatedAt": "2024-01-02T10:00:00Z",
+      "publishedAt": "2024-01-02T10:00:00Z"
+    },
+    {
+      "id": "art3",
+      "documentId": "art3",
+      "title": "The Latest in Tech Gadgets",
+      "slug": "latest-tech-gadgets",
+      "content": "# The Latest in Tech Gadgets\n\nStay up to date with the newest technology trends and gadgets that can enhance your daily life.",
+      "description": "Exploring the latest technology trends",
+      "createdAt": "2024-01-03T10:00:00Z",
+      "updatedAt": "2024-01-03T10:00:00Z",
+      "publishedAt": "2024-01-03T10:00:00Z"
+    }
+  ]
+}
+

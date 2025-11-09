@@ -1,0 +1,161 @@
+{
+  "products": [
+    {
+      "documentId": "1",
+      "name": "Premium Running Shoes",
+      "slug": "premium-running-shoes",
+      "price": 15000000,
+      "description": "High-quality running shoes designed for comfort and performance. Perfect for daily runs and long-distance training.",
+      "shortDescription": "High-quality running shoes for daily runs",
+      "status": "active",
+      "product_status": "active",
+      "SKU": "PRS-001",
+      "stock_quantity": 50,
+      "publishedAt": "2024-01-15T10:00:00Z",
+      "category": {
+        "documentId": "cat1",
+        "name": "Running",
+        "slug": "running"
+      },
+      "brand": {
+        "documentId": "brand1",
+        "name": "SportMax",
+        "slug": "sportmax"
+      },
+      "images": [],
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "documentId": "2",
+      "name": "Classic Sneakers",
+      "slug": "classic-sneakers",
+      "price": 12000000,
+      "description": "Timeless classic sneakers that never go out of style. Comfortable and versatile for any occasion.",
+      "shortDescription": "Timeless classic sneakers for any occasion",
+      "status": "active",
+      "product_status": "active",
+      "SKU": "CS-002",
+      "stock_quantity": 75,
+      "publishedAt": "2024-01-16T10:00:00Z",
+      "category": {
+        "documentId": "cat2",
+        "name": "Sneakers",
+        "slug": "sneaker"
+      },
+      "brand": {
+        "documentId": "brand2",
+        "name": "UrbanStyle",
+        "slug": "urbanstyle"
+      },
+      "images": [],
+      "createdAt": "2024-01-16T10:00:00Z",
+      "updatedAt": "2024-01-16T10:00:00Z"
+    },
+    {
+      "documentId": "3",
+      "name": "Wireless Headphones",
+      "slug": "wireless-headphones",
+      "price": 2500000,
+      "description": "Premium wireless headphones with noise cancellation. Perfect for music lovers and professionals.",
+      "shortDescription": "Premium wireless headphones with noise cancellation",
+      "status": "active",
+      "product_status": "active",
+      "SKU": "WH-003",
+      "stock_quantity": 30,
+      "publishedAt": "2024-01-17T10:00:00Z",
+      "category": {
+        "documentId": "cat3",
+        "name": "Electronics",
+        "slug": "electronics"
+      },
+      "brand": {
+        "documentId": "brand3",
+        "name": "TechSound",
+        "slug": "techsound"
+      },
+      "images": [],
+      "createdAt": "2024-01-17T10:00:00Z",
+      "updatedAt": "2024-01-17T10:00:00Z"
+    },
+    {
+      "documentId": "4",
+      "name": "Smart Watch",
+      "slug": "smart-watch",
+      "price": 5000000,
+      "description": "Feature-rich smartwatch with fitness tracking, notifications, and long battery life.",
+      "shortDescription": "Feature-rich smartwatch with fitness tracking",
+      "status": "active",
+      "product_status": "active",
+      "SKU": "SW-004",
+      "stock_quantity": 25,
+      "publishedAt": "2024-01-18T10:00:00Z",
+      "category": {
+        "documentId": "cat3",
+        "name": "Electronics",
+        "slug": "electronics"
+      },
+      "brand": {
+        "documentId": "brand3",
+        "name": "TechSound",
+        "slug": "techsound"
+      },
+      "images": [],
+      "createdAt": "2024-01-18T10:00:00Z",
+      "updatedAt": "2024-01-18T10:00:00Z"
+    },
+    {
+      "documentId": "5",
+      "name": "Designer T-Shirt",
+      "slug": "designer-t-shirt",
+      "price": 800000,
+      "description": "Premium cotton t-shirt with modern design. Comfortable fit and durable quality.",
+      "shortDescription": "Premium cotton t-shirt with modern design",
+      "status": "active",
+      "product_status": "active",
+      "SKU": "DT-005",
+      "stock_quantity": 100,
+      "publishedAt": "2024-01-19T10:00:00Z",
+      "category": {
+        "documentId": "cat4",
+        "name": "Clothing",
+        "slug": "clothing"
+      },
+      "brand": {
+        "documentId": "brand2",
+        "name": "UrbanStyle",
+        "slug": "urbanstyle"
+      },
+      "images": [],
+      "createdAt": "2024-01-19T10:00:00Z",
+      "updatedAt": "2024-01-19T10:00:00Z"
+    },
+    {
+      "documentId": "6",
+      "name": "Leather Backpack",
+      "slug": "leather-backpack",
+      "price": 3500000,
+      "description": "Stylish leather backpack with multiple compartments. Perfect for work and travel.",
+      "shortDescription": "Stylish leather backpack for work and travel",
+      "status": "active",
+      "product_status": "active",
+      "SKU": "LB-006",
+      "stock_quantity": 40,
+      "publishedAt": "2024-01-20T10:00:00Z",
+      "category": {
+        "documentId": "cat5",
+        "name": "Accessories",
+        "slug": "accessories"
+      },
+      "brand": {
+        "documentId": "brand4",
+        "name": "LeatherCraft",
+        "slug": "leathercraft"
+      },
+      "images": [],
+      "createdAt": "2024-01-20T10:00:00Z",
+      "updatedAt": "2024-01-20T10:00:00Z"
+    }
+  ]
+}
+

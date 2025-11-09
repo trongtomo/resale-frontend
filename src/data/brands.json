@@ -1,0 +1,37 @@
+{
+  "brands": [
+    {
+      "documentId": "brand1",
+      "name": "SportMax",
+      "slug": "sportmax",
+      "description": "Premium sports equipment and footwear",
+      "createdAt": "2024-01-05T10:00:00Z",
+      "updatedAt": "2024-01-05T10:00:00Z"
+    },
+    {
+      "documentId": "brand2",
+      "name": "UrbanStyle",
+      "slug": "urbanstyle",
+      "description": "Urban fashion and lifestyle products",
+      "createdAt": "2024-01-06T10:00:00Z",
+      "updatedAt": "2024-01-06T10:00:00Z"
+    },
+    {
+      "documentId": "brand3",
+      "name": "TechSound",
+      "slug": "techsound",
+      "description": "Cutting-edge technology and audio devices",
+      "createdAt": "2024-01-07T10:00:00Z",
+      "updatedAt": "2024-01-07T10:00:00Z"
+    },
+    {
+      "documentId": "brand4",
+      "name": "LeatherCraft",
+      "slug": "leathercraft",
+      "description": "Handcrafted leather goods",
+      "createdAt": "2024-01-08T10:00:00Z",
+      "updatedAt": "2024-01-08T10:00:00Z"
+    }
+  ]
+}
+

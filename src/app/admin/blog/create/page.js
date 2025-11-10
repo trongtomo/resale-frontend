@@ -41,6 +41,7 @@ export default function CreateBlogPage() {
     try {
       const uploadFormData = new FormData()
       uploadFormData.append('file', file)
+      uploadFormData.append('folder', 'resale-blog')
 
       const response = await fetch('/api/upload', {
         method: 'POST',

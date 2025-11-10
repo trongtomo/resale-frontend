@@ -28,17 +28,23 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              Discover Amazing Products
+              Hot Deal Shoes
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-300">
-              Shop the latest collection with unbeatable prices
+              Find the best deals on shoes and more
             </p>
-            <Link 
-              href="/products" 
-              className="inline-block bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-lg"
-            >
-              Shop Now
-            </Link>
+            {categories.length > 0 ? (
+              <Link
+                href={`/products?category=${categories[0].slug}`}
+                className="inline-block bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-lg"
+              >
+                Shop Now
+              </Link>
+            ) : (
+              <span className="inline-block bg-gray-600 text-white px-8 py-4 rounded-lg font-semibold text-lg cursor-not-allowed">
+                Shop Now
+              </span>
+            )}
           </div>
         </div>
       </section>
@@ -51,11 +57,11 @@ export default async function Home() {
               <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Products</h2>
               <p className="text-lg text-gray-600">Handpicked items just for you</p>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {products.map((product) => (
-                <Link 
-                  key={product.documentId} 
+                <Link
+                  key={product.documentId}
                   href={`/products/${product.slug}`}
                   className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 group"
                 >
@@ -97,10 +103,10 @@ export default async function Home() {
               ))}
             </div>
 
-            {products.length >= 8 && (
+            {products.length >= 8 && categories.length > 0 && (
               <div className="text-center mt-12">
-                <Link 
-                  href="/products" 
+                <Link
+                  href={`/products?category=${categories[0].slug}`}
                   className="inline-block bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
                 >
                   View All Products
@@ -119,11 +125,11 @@ export default async function Home() {
               <h2 className="text-4xl font-bold text-gray-900 mb-4">Shop by Category</h2>
               <p className="text-lg text-gray-600">Browse our collections</p>
             </div>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {categories.map((category) => (
-                <Link 
-                  key={category.documentId} 
+                <Link
+                  key={category.documentId}
                   href={`/products?category=${category.slug}`}
                   className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-all duration-300 text-center group"
                 >
@@ -146,14 +152,16 @@ export default async function Home() {
       {products.length === 0 && !error && (
         <section className="py-32 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Welcome to Our Store</h2>
-            <p className="text-lg text-gray-600 mb-8">Products will appear here once you add them</p>
-            <Link 
-              href="/products" 
-              className="inline-block bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
-            >
-              Browse Products
-            </Link>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Hot Deal Shoes</h2>
+            <p className="text-lg text-gray-600 mb-8">Find the best deals on shoes and more</p>
+            {categories.length > 0 && (
+              <Link
+                href={`/products?category=${categories[0].slug}`}
+                className="inline-block bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+              >
+                Browse Shoes
+              </Link>
+            )}
           </div>
         </section>
       )}

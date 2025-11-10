@@ -1,17 +1,15 @@
 import { NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
 
-export async function middleware(request) {
+export function middleware(request) {
   const { pathname } = request.nextUrl
+  const adminSession = request.cookies.get('admin_session')
 
-  // Protect admin routes
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-    const cookieStore = await cookies()
-    const session = cookieStore.get('admin_session')
-
-    if (!session || session.value !== 'authenticated') {
+  // Protect admin routes (exclude login page)
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
+    if (!adminSession || adminSession.value !== 'authenticated') {
       // Redirect to login if not authenticated
-      return NextResponse.redirect(new URL('/admin/login', request.url))
+      const url = new URL('/admin/login', request.url)
+      return NextResponse.redirect(url)
     }
   }
 
@@ -27,10 +25,7 @@ export async function middleware(request) {
 
     // Only protect write operations (POST, PUT, DELETE)
     if (['POST', 'PUT', 'DELETE'].includes(method)) {
-      const cookieStore = await cookies()
-      const session = cookieStore.get('admin_session')
-
-      if (!session || session.value !== 'authenticated') {
+      if (!adminSession || adminSession.value !== 'authenticated') {
         return NextResponse.json(
           { error: 'Unauthorized' },
           { status: 401 }
@@ -44,6 +39,7 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
+    '/admin',
     '/admin/:path*',
     '/api/products/:path*',
     '/api/articles/:path*',
@@ -52,4 +48,7 @@ export const config = {
     '/api/brands/:path*',
   ],
 }
+
+// Force middleware to run on all admin routes
+export const runtime = 'nodejs'
 

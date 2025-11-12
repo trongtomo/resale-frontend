@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@uiw/react-md-editor": "^4.0.8",
     "cloudinary": "^2.8.0",
     "next": "15.5.2",
     "nprogress": "^0.2.0",
@@ -16,7 +17,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "swiper": "^12.0.3"
   },
   "devDependencies": {
     "@types/node": "^20",

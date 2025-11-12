@@ -17,6 +17,9 @@ export const localData = {
     
     let products = [...productsData.products]
     
+    // Filter out inactive products (only show active)
+    products = products.filter(p => p.status === 'active')
+    
     // Apply category filter
     if (filters.category) {
       products = products.filter(p => p.category?.slug === filters.category)
@@ -85,7 +88,7 @@ export const localData = {
   
   async getProductBySlug(slug) {
     await delay(50)
-    const product = productsData.products.find(p => p.slug === slug)
+    const product = productsData.products.find(p => p.slug === slug && p.status === 'active')
     return {
       data: product ? [product] : []
     }
@@ -94,13 +97,15 @@ export const localData = {
   async getAllProducts() {
     await delay(50)
     return {
-      products: productsData.products
+      products: productsData.products.filter(p => p.status === 'active')
     }
   },
   
   async getProductsByCategory(categorySlug) {
     await delay(50)
-    const products = productsData.products.filter(p => p.category?.slug === categorySlug)
+    const products = productsData.products.filter(p => 
+      p.category?.slug === categorySlug && p.status === 'active'
+    )
     return {
       products
     }
@@ -109,7 +114,9 @@ export const localData = {
   async getProductsByParentCategory(parentCategorySlug) {
     await delay(50)
     // For now, return products by category (can be extended for parent/child relationships)
-    const products = productsData.products.filter(p => p.category?.slug === parentCategorySlug)
+    const products = productsData.products.filter(p => 
+      p.category?.slug === parentCategorySlug && p.status === 'active'
+    )
     return {
       products
     }
@@ -117,7 +124,9 @@ export const localData = {
   
   async getProductsByBrand(brandSlug) {
     await delay(50)
-    const products = productsData.products.filter(p => p.brand?.slug === brandSlug)
+    const products = productsData.products.filter(p => 
+      p.brand?.slug === brandSlug && p.status === 'active'
+    )
     return {
       products
     }

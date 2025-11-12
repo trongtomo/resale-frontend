@@ -1,5 +1,7 @@
 import AddToCartButton from '@/components/AddToCartButton'
 import MarkdownRenderer from '@/components/MarkdownRenderer'
+import ProductPageClient from '@/components/ProductPageClient'
+import ProductImageGallery from '@/components/ProductImageGallery'
 import { api } from '@/lib/simple-api'
 import { formatCurrency, formatDate } from '@/utils/format'
 import Link from 'next/link'
@@ -69,37 +71,57 @@ export default async function ProductPage({ params }) {
 
   return (
     <div className="min-h-screen">
+      <ProductPageClient product={product} />
       <div className="bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
             <Link href="/" className="hover:text-gray-900">Home</Link>
-            <span>/</span>
-            <Link href="/products" className="hover:text-gray-900">Products</Link>
-            <span>/</span>
+            {product.category && (
+              <>
+                <span className="text-gray-400">/</span>
+                <Link 
+                  href={`/products?category=${product.category.slug}`} 
+                  className="hover:text-gray-900"
+                >
+                  {product.category.name}
+                </Link>
+              </>
+            )}
+            <span className="text-gray-400">/</span>
             <span className="text-gray-900">{product.name}</span>
           </nav>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Product Image */}
-          <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
-            <div className="text-gray-400 text-center">
-              <svg className="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-              </svg>
-              <p className="text-lg">Product Image</p>
-            </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Product Images */}
+          <div className="sticky top-8 h-fit">
+            {product.images && product.images.length > 0 ? (
+              <ProductImageGallery images={product.images} productName={product.name} />
+            ) : (
+              <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
+                <div className="text-gray-400 text-center">
+                  <svg className="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <p className="text-lg">No Image Available</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Product Details */}
-          <div className="space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
-              <p className="text-lg text-gray-600 mb-4">{product.shortDescription}</p>
+          <div>
+            <div className="space-y-4 mb-6">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
+                {product.shortDescription && (
+                  <p className="text-lg text-gray-600">{product.shortDescription}</p>
+                )}
+              </div>
               
-              <div className="flex items-center space-x-4 mb-6">
+              <div className="flex items-center space-x-4">
                 <span className="text-3xl font-bold text-gray-900">
                   {formatCurrency(product.price)}
                 </span>
@@ -109,58 +131,36 @@ export default async function ProductPage({ params }) {
                   </span>
                 )}
               </div>
-
-              <div className="flex items-center space-x-4 mb-6">
-                <span className={`px-3 py-1 text-sm rounded-full ${
-                  product.status === 'active' 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-red-100 text-red-800'
-                }`}>
-                  {product.status}
-                </span>
-              </div>
             </div>
 
             {/* Product Actions */}
-            <div className="space-y-4">
+            <div className="space-y-3 mb-8">
               <AddToCartButton product={product} />
               <button className="w-full border border-gray-300 text-gray-700 py-3 px-6 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
                 Add to Wishlist
               </button>
             </div>
 
-            {/* Product Info */}
-            <div className="border-t pt-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Information</h3>
-              <dl className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <dt className="font-medium text-gray-600">Status</dt>
-                  <dd className="text-gray-900 capitalize">{product.status}</dd>
+            {/* Product Description */}
+            {product.description && (
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-3">Description</h2>
+                <div className="prose prose-sm max-w-none">
+                  <MarkdownRenderer content={product.description} />
                 </div>
-                <div>
-                  <dt className="font-medium text-gray-600">Published</dt>
-                  <dd className="text-gray-900">{formatDate(product.publishedAt)}</dd>
+              </div>
+            )}
+
+            {/* Product Content (MDX) */}
+            {product.content && (
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-3">Details</h2>
+                <div className="prose prose-sm max-w-none">
+                  <MarkdownRenderer content={product.content} />
                 </div>
-              </dl>
-            </div>
+              </div>
+            )}
           </div>
-        </div>
-
-        {/* Product Description */}
-        {product.description && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Description</h2>
-            <MarkdownRenderer content={product.description} />
-          </div>
-        )}
-
-        <div className="mt-12 text-center">
-          <Link 
-            href="/products" 
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Back to Products
-          </Link>
         </div>
       </div>
     </div>

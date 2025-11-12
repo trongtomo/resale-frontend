@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
+    ],
+  },
   turbopack: {
     rules: {
       '*.svg': {
@@ -7,16 +16,6 @@ const nextConfig = {
         as: '*.js',
       },
     },
-  },
-  // Suppress HMR warnings for data JSON files
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.watchOptions = {
-        ...config.watchOptions,
-        ignored: ['**/src/data/**/*.json'],
-      }
-    }
-    return config
   },
 }
 

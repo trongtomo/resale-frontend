@@ -73,7 +73,12 @@ export async function POST(request) {
     }
 
     // Generate new ID
-    const maxId = Math.max(...data.brands.map(b => parseInt(b.documentId?.replace('brand', '') || '0')), 0)
+    const maxId = data.brands.length > 0 
+      ? Math.max(...data.brands.map(b => {
+          const idMatch = b.documentId?.match(/brand(\d+)/)
+          return idMatch ? parseInt(idMatch[1]) : 0
+        }), 0)
+      : 0
     const newId = `brand${maxId + 1}`
 
     const newBrand = {

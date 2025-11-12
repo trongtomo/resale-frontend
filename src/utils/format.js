@@ -42,3 +42,18 @@ export function slugify(text) {
     .replace(/[\s_-]+/g, '-')
     .replace(/^-+|-+$/g, '')
 }
+
+export function formatNumber(value) {
+  if (!value && value !== 0) return ''
+  // Remove any non-digit characters
+  const numStr = String(value).replace(/\D/g, '')
+  if (!numStr) return ''
+  // Format with commas
+  return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
+export function parseFormattedNumber(formattedValue) {
+  if (!formattedValue) return ''
+  // Remove commas and return as string
+  return formattedValue.replace(/,/g, '')
+}

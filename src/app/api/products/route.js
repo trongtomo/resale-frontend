@@ -86,6 +86,7 @@ export async function POST(request) {
       price: parseInt(body.price) || 0,
       description: body.description || '',
       shortDescription: body.shortDescription || body.description?.substring(0, 100) || '',
+      content: body.content || '',
       status: body.status || 'active',
       category: body.category || null,
       brand: body.brand || null,

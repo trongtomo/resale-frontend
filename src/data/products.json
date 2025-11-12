@@ -1,3 +1,37 @@
 {
-  "products": []
+  "products": [
+    {
+      "documentId": "1",
+      "name": "Test",
+      "slug": "test-shoe",
+      "price": 1000000,
+      "description": "Test shoe",
+      "shortDescription": "Test shoe",
+      "status": "active",
+      "category": {
+        "documentId": "cat1",
+        "name": "Shoes",
+        "slug": "shoes",
+        "description": "Footwear for all occasions",
+        "createdAt": "2024-01-10T10:00:00Z",
+        "publishedAt": "2024-01-10T10:00:00Z"
+      },
+      "brand": {
+        "documentId": "brand5",
+        "name": "Nike",
+        "slug": "nike",
+        "description": "",
+        "createdAt": "2025-11-12T17:39:50.840Z",
+        "updatedAt": "2025-11-12T17:39:50.840Z"
+      },
+      "images": [
+        "https://res.cloudinary.com/ddez0qflc/image/upload/v1762969296/resale-products/zsof0v8s0bg6rhgg8iq5.jpg",
+        "https://res.cloudinary.com/ddez0qflc/image/upload/v1762969330/resale-products/fzzxckzgys73ogevaywz.jpg"
+      ],
+      "content": "# Test Shoe Details\n\nThis is a **premium test shoe** with amazing features.\n\n## Features\n\n- Comfortable fit\n- Durable materials\n- Stylish design\n\n## Specifications\n\n- Size: Available in multiple sizes\n- Color: Various colors available\n- Material: High-quality materials\n\n## Why Choose This Shoe?\n\nThis test shoe is perfect for everyday wear and provides excellent comfort and style.",
+      "publishedAt": "2025-11-12T17:42:19.594Z",
+      "createdAt": "2025-11-12T17:42:19.594Z",
+      "updatedAt": "2025-11-12T17:42:19.594Z"
+    }
+  ]
 }

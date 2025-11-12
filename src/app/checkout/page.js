@@ -22,6 +22,8 @@ export default function CheckoutPage() {
     country: ''
   })
 
+  const [continueShoppingUrl, setContinueShoppingUrl] = useState('/products')
+
   useEffect(() => {
     // Load saved address from cookies
     const savedAddress = getCustomerAddress()
@@ -29,9 +31,14 @@ export default function CheckoutPage() {
       setFormData(savedAddress)
     }
 
+    // Get the last category from localStorage
+    const lastCategory = typeof window !== 'undefined' ? localStorage.getItem('lastCategory') : null
+    const url = lastCategory ? `/products?category=${lastCategory}` : '/products'
+    setContinueShoppingUrl(url)
+
     // Redirect if cart is empty
     if (items.length === 0) {
-      router.push('/products')
+      router.push(url)
     }
   }, [items.length, router])
 
@@ -59,7 +66,7 @@ export default function CheckoutPage() {
 
       // Redirect to success page or show success message
       alert('Order placed successfully! Thank you for your purchase.')
-      router.push('/products')
+      router.push(continueShoppingUrl)
     } catch (error) {
       console.error('Error processing order:', error)
       alert('There was an error processing your order. Please try again.')
@@ -254,7 +261,7 @@ export default function CheckoutPage() {
             </div>
 
             <Link
-              href="/products"
+              href={continueShoppingUrl}
               className="block text-center text-blue-600 hover:text-blue-800 text-sm mt-4"
             >
               Continue Shopping

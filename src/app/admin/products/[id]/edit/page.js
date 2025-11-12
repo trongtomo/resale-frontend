@@ -3,6 +3,11 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+import { formatNumber, parseFormattedNumber } from '@/utils/format'
+import '@uiw/react-md-editor/markdown-editor.css'
+
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
 export default function EditProductPage() {
   const router = useRouter()
@@ -19,6 +24,7 @@ export default function EditProductPage() {
     price: '',
     description: '',
     shortDescription: '',
+    content: '',
     status: 'active',
     category: '',
     brand: '',
@@ -42,9 +48,10 @@ export default function EditProductPage() {
             setFormData({
               name: product.name || '',
               slug: product.slug || '',
-              price: product.price || '',
+              price: formatNumber(product.price) || '',
               description: product.description || '',
               shortDescription: product.shortDescription || '',
+              content: product.content || '',
               status: product.status || 'active',
               category: product.category?.documentId || '',
               brand: product.brand?.documentId || '',
@@ -74,6 +81,22 @@ export default function EditProductPage() {
     setFormData(prev => ({
       ...prev,
       [name]: value
+    }))
+  }
+
+  const handlePriceChange = (e) => {
+    const rawValue = e.target.value
+    const formatted = formatNumber(rawValue)
+    setFormData(prev => ({
+      ...prev,
+      price: formatted
+    }))
+  }
+
+  const handleContentChange = (value) => {
+    setFormData(prev => ({
+      ...prev,
+      content: value || ''
     }))
   }
 
@@ -126,7 +149,7 @@ export default function EditProductPage() {
 
       const productData = {
         ...formData,
-        price: parseInt(formData.price),
+        price: parseInt(parseFormattedNumber(formData.price)) || 0,
         category: selectedCategory || null,
         brand: selectedBrand || null
       }
@@ -211,14 +234,14 @@ export default function EditProductPage() {
                 Price *
               </label>
               <input
-                type="number"
+                type="text"
                 id="price"
                 name="price"
                 required
-                min="0"
                 value={formData.price}
-                onChange={handleInputChange}
+                onChange={handlePriceChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                placeholder="1,000,000"
               />
             </div>
 
@@ -248,6 +271,20 @@ export default function EditProductPage() {
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
+            </div>
+
+            <div>
+              <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
+                Content (MDX)
+              </label>
+              <div data-color-mode="light">
+                <MDEditor
+                  value={formData.content}
+                  onChange={handleContentChange}
+                  preview="edit"
+                  height={400}
+                />
+              </div>
             </div>
 
             <div>

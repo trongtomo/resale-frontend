@@ -3,6 +3,11 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+import { formatNumber, parseFormattedNumber } from '@/utils/format'
+import '@uiw/react-md-editor/markdown-editor.css'
+
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
 export default function CreateProductPage() {
   const router = useRouter()
@@ -18,6 +23,7 @@ export default function CreateProductPage() {
     price: '',
     description: '',
     shortDescription: '',
+    content: '',
     status: 'active',
     category: '',
     brand: '',
@@ -52,6 +58,22 @@ export default function CreateProductPage() {
         .replace(/^-+|-+$/g, '')
       setFormData(prev => ({ ...prev, slug }))
     }
+  }
+
+  const handlePriceChange = (e) => {
+    const rawValue = e.target.value
+    const formatted = formatNumber(rawValue)
+    setFormData(prev => ({
+      ...prev,
+      price: formatted
+    }))
+  }
+
+  const handleContentChange = (value) => {
+    setFormData(prev => ({
+      ...prev,
+      content: value || ''
+    }))
   }
 
   const handleCreateCategory = async () => {
@@ -91,10 +113,13 @@ export default function CreateProductPage() {
         setBrands([...brands, data.data])
         setFormData(prev => ({ ...prev, brand: data.data.documentId }))
         setNewBrand('')
+      } else {
+        const errorData = await response.json()
+        alert(errorData.error || 'Failed to create brand')
       }
     } catch (error) {
       console.error('Error creating brand:', error)
-      alert('Failed to create brand')
+      alert('Failed to create brand. Please try again.')
     }
   }
 
@@ -148,7 +173,7 @@ export default function CreateProductPage() {
 
       const productData = {
         ...formData,
-        price: parseInt(formData.price),
+        price: parseInt(parseFormattedNumber(formData.price)) || 0,
         category: selectedCategory || null,
         brand: selectedBrand || null
       }
@@ -225,15 +250,14 @@ export default function CreateProductPage() {
                 Price (VND) *
               </label>
               <input
-                type="number"
+                type="text"
                 id="price"
                 name="price"
                 required
-                min="0"
                 value={formData.price}
-                onChange={handleInputChange}
+                onChange={handlePriceChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="15000000"
+                placeholder="1,000,000"
               />
             </div>
 
@@ -265,6 +289,20 @@ export default function CreateProductPage() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Detailed product description"
               />
+            </div>
+
+            <div>
+              <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
+                Content (MDX)
+              </label>
+              <div data-color-mode="light">
+                <MDEditor
+                  value={formData.content}
+                  onChange={handleContentChange}
+                  preview="edit"
+                  height={400}
+                />
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

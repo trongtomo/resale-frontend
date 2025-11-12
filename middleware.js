@@ -5,7 +5,7 @@ export function middleware(request) {
   const adminSession = request.cookies.get('admin_session')
 
   // Protect admin routes (exclude login page)
-  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login')) {
+  if (pathname === '/admin' || (pathname.startsWith('/admin/') && pathname !== '/admin/login')) {
     if (!adminSession || adminSession.value !== 'authenticated') {
       // Redirect to login if not authenticated
       const url = new URL('/admin/login', request.url)

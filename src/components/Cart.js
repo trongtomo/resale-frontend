@@ -4,10 +4,22 @@ import { useCart } from '@/contexts/CartContext'
 import { formatCurrency } from '@/utils/format'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function Cart({ isOpen, onClose }) {
   const { items, removeFromCart, updateQuantity, getTotalPrice } = useCart()
   const router = useRouter()
+  const [continueShoppingUrl, setContinueShoppingUrl] = useState('/products')
+
+  useEffect(() => {
+    // Get the last category from localStorage
+    const lastCategory = typeof window !== 'undefined' ? localStorage.getItem('lastCategory') : null
+    if (lastCategory) {
+      setContinueShoppingUrl(`/products?category=${lastCategory}`)
+    } else {
+      setContinueShoppingUrl('/products')
+    }
+  }, [])
 
   const handleCheckout = () => {
     onClose()
@@ -42,13 +54,12 @@ export default function Cart({ isOpen, onClose }) {
               <h3 className="mt-2 text-sm font-medium text-gray-900">Your cart is empty</h3>
               <p className="mt-1 text-sm text-gray-500">Start adding some items to your cart.</p>
               <div className="mt-6">
-                <Link
-                  href="/products"
+                <button
                   onClick={onClose}
                   className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
                 >
                   Continue Shopping
-                </Link>
+                </button>
               </div>
             </div>
           ) : (
@@ -117,13 +128,12 @@ export default function Cart({ isOpen, onClose }) {
                 Checkout
               </button>
               
-              <Link
-                href="/products"
+              <button
                 onClick={onClose}
-                className="w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-md font-medium text-center block hover:bg-gray-50"
+                className="w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-md font-medium hover:bg-gray-50"
               >
                 Continue Shopping
-              </Link>
+              </button>
             </div>
           </div>
         )}

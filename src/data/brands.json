@@ -31,9 +31,14 @@
       "description": "Handcrafted leather goods",
       "createdAt": "2024-01-08T10:00:00Z",
       "updatedAt": "2024-01-08T10:00:00Z"
+    },
+    {
+      "documentId": "brand5",
+      "name": "Nike",
+      "slug": "nike",
+      "description": "",
+      "createdAt": "2025-11-12T17:39:50.840Z",
+      "updatedAt": "2025-11-12T17:39:50.840Z"
     }
   ]
 }
-
-
-

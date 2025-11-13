@@ -81,12 +81,6 @@ export default function Header() {
             >
               Blog
             </Link>
-            <Link 
-              href="/tags" 
-              className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-            >
-              Tags
-            </Link>
           </nav>
 
           {/* Cart and Mobile Menu */}

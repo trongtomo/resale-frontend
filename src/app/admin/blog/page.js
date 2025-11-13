@@ -23,13 +23,13 @@ export default function AdminBlogPage() {
     }
   }
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (slug) => {
     if (!confirm('Are you sure you want to delete this article?')) {
       return
     }
 
     try {
-      const response = await fetch(`/api/articles/${id}`, {
+      const response = await fetch(`/api/articles/${slug}`, {
         method: 'DELETE'
       })
 
@@ -101,13 +101,13 @@ export default function AdminBlogPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <Link
-                        href={`/admin/blog/${article.documentId}/edit`}
+                        href={`/admin/blog/${article.slug}/edit`}
                         className="text-blue-600 hover:text-blue-900 mr-4"
                       >
                         Edit
                       </Link>
                       <button
-                        onClick={() => handleDelete(article.documentId)}
+                        onClick={() => handleDelete(article.slug)}
                         className="text-red-600 hover:text-red-900"
                       >
                         Delete

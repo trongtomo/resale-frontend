@@ -1,5 +1,6 @@
 import MarkdownRenderer from '@/components/MarkdownRenderer'
 import StrapiBlocks from '@/components/StrapiBlocks'
+import BlogBreadcrumb from '@/components/BlogBreadcrumb'
 import { getArticleBySlug } from '@/services/articles'
 import { formatDate } from '@/utils/format'
 import Link from 'next/link'
@@ -104,13 +105,7 @@ export default async function ArticlePage({ params }) {
                   <p className="text-xl text-gray-200 mb-4">{article.description}</p>
                 )}
                 <div className="flex items-center justify-center space-x-6 text-sm text-gray-300">
-                  <span>Published: {formatDate(article.publishedAt)}</span>
-                  {article.author && <span>By: {typeof article.author === 'string' ? article.author : article.author.name || article.author.email || 'Unknown'}</span>}
-                  {article.category && (
-                    <span className="px-3 py-1 bg-blue-600 text-white rounded-full">
-                      {typeof article.category === 'string' ? article.category : article.category.name || article.category.title || 'Category'}
-                    </span>
-                  )}
+                  <span>Published: {formatDate(article.publishedAt, { format: 'DD-MM-YYYY' })}</span>
                 </div>
               </div>
             </div>
@@ -124,13 +119,7 @@ export default async function ArticlePage({ params }) {
                   <p className="text-lg text-gray-600 mb-4">{article.description}</p>
                 )}
                 <div className="flex items-center justify-center space-x-6 text-sm text-gray-500">
-                  <span>Published: {formatDate(article.publishedAt)}</span>
-                  {article.author && <span>By: {typeof article.author === 'string' ? article.author : article.author.name || article.author.email || 'Unknown'}</span>}
-                  {article.category && (
-                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full">
-                      {typeof article.category === 'string' ? article.category : article.category.name || article.category.title || 'Category'}
-                    </span>
-                  )}
+                  <span>Published: {formatDate(article.publishedAt, { format: 'DD-MM-YYYY' })}</span>
                 </div>
               </div>
             </div>
@@ -140,6 +129,7 @@ export default async function ArticlePage({ params }) {
 
       {/* Article Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <BlogBreadcrumb articleTitle={article.title} />
         <article className="prose max-w-none">
           {/* Render article content */}
           {article.content ? (

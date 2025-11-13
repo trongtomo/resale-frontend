@@ -1,3 +1,214 @@
 {
-  "articles": []
+  "articles": [
+    {
+      "documentId": "art1",
+      "title": "Test",
+      "slug": "test-blog",
+      "content": "**Blog test**",
+      "description": "This is test Blog",
+      "publishedAt": "2025-11-13T04:47:10.357Z",
+      "createdAt": "2025-11-13T04:47:10.357Z",
+      "updatedAt": "2025-11-13T05:16:09.952Z"
+    },
+    {
+      "documentId": "art2",
+      "title": "The Ultimate Guide to Finding Quality Second-Hand Shoes",
+      "slug": "ultimate-guide-quality-second-hand-shoes",
+      "content": "# The Ultimate Guide to Finding Quality Second-Hand Shoes\n\nFinding the perfect pair of second-hand shoes can be a rewarding experience. Not only do you save money, but you also contribute to sustainable fashion. Here's everything you need to know.\n\n## What to Look For\n\n- **Sole Condition**: Check for excessive wear, especially in the heel area\n- **Upper Material**: Look for cracks, tears, or excessive stretching\n- **Insoles**: Ensure they're clean and not overly worn\n- **Brand Quality**: Research the brand's reputation for durability\n\n## Best Practices\n\n1. Always try shoes on before purchasing\n2. Check for odors that might indicate poor storage\n3. Verify the size matches your needs\n4. Look for original packaging if available\n\n## Conclusion\n\nWith these tips, you'll be well-equipped to find amazing second-hand shoes that look and feel great!",
+      "description": "Discover expert tips for finding high-quality second-hand shoes that look brand new. Learn what to check before buying and how to spot great deals.",
+      "publishedAt": "2025-01-15T10:00:00.000Z",
+      "createdAt": "2025-01-15T10:00:00.000Z",
+      "updatedAt": "2025-01-15T10:00:00.000Z"
+    },
+    {
+      "documentId": "art3",
+      "title": "Sustainable Fashion: Why Resale is the Future",
+      "slug": "sustainable-fashion-resale-future",
+      "content": "# Sustainable Fashion: Why Resale is the Future\n\nThe fashion industry is one of the largest polluters globally, but resale fashion offers a solution.\n\n## Environmental Impact\n\n- Reduces textile waste in landfills\n- Lowers carbon footprint from manufacturing\n- Conserves water and resources\n- Extends the life cycle of clothing\n\n## Economic Benefits\n\nResale fashion makes designer and quality items accessible to more people while providing income for sellers.\n\n## How to Get Started\n\n1. Start with items you no longer wear\n2. Research fair pricing\n3. Take quality photos\n4. Write honest descriptions\n\n## The Bottom Line\n\nResale isn't just a trend—it's a movement toward a more sustainable and accessible fashion industry.",
+      "description": "Explore how resale fashion is revolutionizing the industry by reducing waste, lowering costs, and making quality clothing accessible to everyone.",
+      "publishedAt": "2025-01-18T14:30:00.000Z",
+      "createdAt": "2025-01-18T14:30:00.000Z",
+      "updatedAt": "2025-01-18T14:30:00.000Z"
+    },
+    {
+      "documentId": "art4",
+      "title": "Top 10 Designer Brands to Buy Second-Hand",
+      "slug": "top-10-designer-brands-buy-second-hand",
+      "content": "# Top 10 Designer Brands to Buy Second-Hand\n\nBuying designer items second-hand is smart shopping. Here are the best brands to look for:\n\n## 1. Nike\n\nKnown for durability and timeless style. Air Max and Air Force 1 models hold value exceptionally well.\n\n## 2. Adidas\n\nClassic designs like Stan Smith and Superstar are always in demand.\n\n## 3. Levi's\n\nVintage denim pieces can be worth more than new items.\n\n## 4. The North Face\n\nOutdoor gear that lasts for years, making it perfect for resale.\n\n## 5. Patagonia\n\nHigh-quality materials and ethical production make these items valuable.\n\n## 6. Converse\n\nTimeless sneakers that never go out of style.\n\n## 7. Vans\n\nSkate culture favorites with lasting appeal.\n\n## 8. Timberland\n\nDurable boots that can last decades.\n\n## 9. Dr. Martens\n\nIconic boots with a cult following.\n\n## 10. New Balance\n\nComfortable and stylish, great for everyday wear.\n\n## Tips for Buying\n\n- Research current market prices\n- Check authenticity\n- Verify condition carefully\n- Buy from reputable sellers",
+      "description": "Discover the best designer and brand-name items to purchase second-hand, from sneakers to clothing, and learn why these brands hold their value.",
+      "publishedAt": "2025-01-20T09:15:00.000Z",
+      "createdAt": "2025-01-20T09:15:00.000Z",
+      "updatedAt": "2025-01-20T09:15:00.000Z"
+    },
+    {
+      "documentId": "art5",
+      "title": "How to Clean and Restore Second-Hand Clothing",
+      "slug": "how-to-clean-restore-second-hand-clothing",
+      "content": "# How to Clean and Restore Second-Hand Clothing\n\nProper cleaning can make second-hand items look like new. Follow these expert tips.\n\n## Pre-Cleaning Inspection\n\nBefore washing, check for:\n- Stains and spots\n- Odors\n- Loose threads or buttons\n- Fabric type and care labels\n\n## Cleaning Methods by Fabric\n\n### Cotton and Linen\n- Machine wash in cold water\n- Use gentle detergent\n- Air dry to prevent shrinking\n\n### Wool and Cashmere\n- Hand wash in cold water\n- Use wool-specific detergent\n- Lay flat to dry\n\n### Denim\n- Turn inside out before washing\n- Use cold water\n- Avoid frequent washing\n\n### Synthetic Materials\n- Check care label\n- Use appropriate temperature\n- Avoid high heat when drying\n\n## Stain Removal Tips\n\n- **Blood**: Cold water and salt\n- **Wine**: White wine or club soda\n- **Grease**: Dish soap and warm water\n- **Ink**: Rubbing alcohol (test first)\n\n## Final Touches\n\n- Steam or iron as needed\n- Replace missing buttons\n- Repair small tears\n- Add fabric softener for freshness",
+      "description": "Learn professional techniques for cleaning and restoring second-hand clothing to make them look brand new. Includes fabric-specific tips and stain removal guides.",
+      "publishedAt": "2025-01-22T11:45:00.000Z",
+      "createdAt": "2025-01-22T11:45:00.000Z",
+      "updatedAt": "2025-01-22T11:45:00.000Z"
+    },
+    {
+      "documentId": "art6",
+      "title": "Sneaker Care: Maintaining Your Collection",
+      "slug": "sneaker-care-maintaining-collection",
+      "content": "# Sneaker Care: Maintaining Your Collection\n\nProper care keeps your sneakers looking fresh and extends their lifespan significantly.\n\n## Daily Maintenance\n\n- **Wipe Down**: Use a damp cloth after each wear\n- **Air Dry**: Never put wet shoes in direct heat\n- **Rotate Pairs**: Give shoes time to air out between wears\n- **Use Shoe Trees**: Maintain shape and absorb moisture\n\n## Deep Cleaning\n\n### Materials Needed\n- Soft-bristle brush\n- Sneaker cleaning solution\n- Microfiber cloth\n- Old toothbrush for details\n\n### Step-by-Step Process\n\n1. Remove laces and insoles\n2. Brush off loose dirt\n3. Apply cleaning solution\n4. Scrub gently with brush\n5. Wipe with damp cloth\n6. Air dry completely\n7. Reassemble with clean laces\n\n## Storage Tips\n\n- Store in a cool, dry place\n- Use original boxes when possible\n- Keep away from direct sunlight\n- Use silica gel packets to prevent moisture\n\n## Protection\n\n- Apply water repellent spray\n- Use sole protectors for valuable pairs\n- Consider professional restoration for rare sneakers",
+      "description": "Essential tips for keeping your sneaker collection in perfect condition. Learn cleaning techniques, storage methods, and maintenance routines.",
+      "publishedAt": "2025-01-25T16:20:00.000Z",
+      "createdAt": "2025-01-25T16:20:00.000Z",
+      "updatedAt": "2025-01-25T16:20:00.000Z"
+    },
+    {
+      "documentId": "art7",
+      "title": "Vintage Fashion: What Makes an Item Valuable",
+      "slug": "vintage-fashion-what-makes-item-valuable",
+      "content": "# Vintage Fashion: What Makes an Item Valuable\n\nUnderstanding what makes vintage items valuable helps you make smarter purchases.\n\n## Key Factors\n\n### Age and Rarity\n- Items from specific decades (80s, 90s) are highly sought after\n- Limited edition releases\n- Discontinued styles\n\n### Brand and Designer\n- Well-known designer labels\n- Heritage brands with history\n- Items from iconic collections\n\n### Condition\n- Original tags and packaging\n- Minimal wear\n- No alterations or repairs\n- Authentic materials\n\n### Cultural Significance\n- Items worn by celebrities\n- Pieces from significant fashion moments\n- Cult classic items\n\n## Popular Vintage Categories\n\n- **Denim**: Vintage Levi's, especially from specific eras\n- **Sneakers**: Original releases from Nike, Adidas\n- **Accessories**: Designer bags, vintage watches\n- **Outerwear**: Vintage jackets and coats\n\n## How to Identify Value\n\n1. Research similar items online\n2. Check for authenticity markers\n3. Verify age and origin\n4. Assess condition honestly\n5. Consider current trends\n\n## Investment Potential\n\nSome vintage items appreciate over time, making them both fashionable and potentially profitable investments.",
+      "description": "Learn what factors determine the value of vintage fashion items, from brand reputation to condition and cultural significance.",
+      "publishedAt": "2025-01-28T13:10:00.000Z",
+      "createdAt": "2025-01-28T13:10:00.000Z",
+      "updatedAt": "2025-01-28T13:10:00.000Z"
+    },
+    {
+      "documentId": "art8",
+      "title": "Building a Capsule Wardrobe with Second-Hand Pieces",
+      "slug": "building-capsule-wardrobe-second-hand-pieces",
+      "content": "# Building a Capsule Wardrobe with Second-Hand Pieces\n\nA capsule wardrobe is a curated collection of versatile, timeless pieces. Here's how to build one with second-hand items.\n\n## What is a Capsule Wardrobe?\n\nA small collection of essential items that can be mixed and matched to create numerous outfits.\n\n## Essential Pieces\n\n### Tops\n- White button-down shirt\n- Quality t-shirts (2-3)\n- Sweater or cardigan\n- Blazer or jacket\n\n### Bottoms\n- Dark wash jeans\n- Black trousers\n- Neutral skirt\n\n### Shoes\n- Classic sneakers\n- Ankle boots\n- Dress shoes\n\n### Accessories\n- Leather belt\n- Quality bag\n- Simple jewelry\n\n## Shopping Strategy\n\n1. **Start with Basics**: Build foundation with neutral colors\n2. **Quality Over Quantity**: Choose well-made pieces\n3. **Versatility**: Items should work with multiple outfits\n4. **Fit is Key**: Ensure everything fits perfectly\n5. **Timeless Style**: Avoid trendy items that date quickly\n\n## Color Palette\n\nStick to a cohesive color scheme:\n- Neutrals: black, white, gray, beige\n- Accent colors: navy, burgundy, olive\n\n## Benefits\n\n- Saves time getting dressed\n- Reduces decision fatigue\n- More sustainable\n- Saves money long-term\n- Always looks put together",
+      "description": "Create a versatile, sustainable capsule wardrobe using second-hand pieces. Learn which essential items to look for and how to build a cohesive collection.",
+      "publishedAt": "2025-02-01T10:30:00.000Z",
+      "createdAt": "2025-02-01T10:30:00.000Z",
+      "updatedAt": "2025-02-01T10:30:00.000Z"
+    },
+    {
+      "documentId": "art9",
+      "title": "The Psychology of Thrift Shopping",
+      "slug": "psychology-thrift-shopping",
+      "content": "# The Psychology of Thrift Shopping\n\nThrift shopping isn't just about saving money—it's a unique psychological experience.\n\n## The Thrill of the Hunt\n\nFinding a hidden gem creates a dopamine rush. The unpredictability makes each shopping trip exciting.\n\n## Benefits for Mental Health\n\n- **Achievement**: Finding great deals feels like winning\n- **Creativity**: Encourages unique style expression\n- **Sustainability**: Positive environmental impact\n- **Community**: Connecting with like-minded shoppers\n\n## Shopping Patterns\n\n### The Treasure Hunter\nLoves searching for rare finds and unique pieces.\n\n### The Bargain Seeker\nFocused on getting the best deals and value.\n\n### The Eco-Conscious\nMotivated by environmental and ethical concerns.\n\n### The Style Explorer\nUses thrift shopping to experiment with different looks.\n\n## Tips for Better Experience\n\n1. Go with an open mind\n2. Visit regularly for best selection\n3. Check multiple sections\n4. Try things on\n5. Don't rush—take your time\n\n## The Social Aspect\n\nThrift shopping often becomes a social activity, whether shopping with friends or sharing finds online.\n\n## Conclusion\n\nUnderstanding the psychology behind thrift shopping helps explain why it's so enjoyable and rewarding.",
+      "description": "Explore the psychological aspects of thrift shopping, from the thrill of the hunt to the mental health benefits and different shopping personalities.",
+      "publishedAt": "2025-02-03T15:45:00.000Z",
+      "createdAt": "2025-02-03T15:45:00.000Z",
+      "updatedAt": "2025-02-03T15:45:00.000Z"
+    },
+    {
+      "documentId": "art10",
+      "title": "Authenticating Designer Items: A Complete Guide",
+      "slug": "authenticating-designer-items-complete-guide",
+      "content": "# Authenticating Designer Items: A Complete Guide\n\nLearn how to spot authentic designer items and avoid fakes when shopping second-hand.\n\n## Key Authentication Points\n\n### Labels and Tags\n- Check spelling and font consistency\n- Verify country of origin\n- Look for serial numbers\n- Examine stitching quality\n\n### Materials and Construction\n- Quality materials feel substantial\n- Even, precise stitching\n- No loose threads\n- Proper hardware weight\n\n### Logos and Branding\n- Consistent logo placement\n- Correct proportions\n- Quality of embossing/printing\n- No misspellings\n\n## Brand-Specific Tips\n\n### Nike\n- Check swoosh shape and placement\n- Verify tag information\n- Examine sole pattern\n\n### Adidas\n- Three stripes alignment\n- Logo quality\n- Tag authenticity\n\n### Luxury Brands\n- Serial numbers\n- Authenticity cards\n- Quality of materials\n- Craftsmanship details\n\n## Red Flags\n\n- Prices too good to be true\n- Poor quality materials\n- Inconsistent branding\n- Missing authenticity markers\n- Seller unwilling to provide details\n\n## Where to Verify\n\n- Official brand websites\n- Authentication services\n- Online communities\n- Expert opinions\n\n## When in Doubt\n\nIf you're unsure about authenticity, it's better to pass on the item than risk buying a fake.",
+      "description": "Master the art of authenticating designer items. Learn what to look for, brand-specific tips, and how to avoid counterfeit products.",
+      "publishedAt": "2025-02-05T09:00:00.000Z",
+      "createdAt": "2025-02-05T09:00:00.000Z",
+      "updatedAt": "2025-02-05T09:00:00.000Z"
+    },
+    {
+      "documentId": "art11",
+      "title": "Seasonal Shopping: Best Times to Buy Second-Hand",
+      "slug": "seasonal-shopping-best-times-buy-second-hand",
+      "content": "# Seasonal Shopping: Best Times to Buy Second-Hand\n\nTiming your purchases can help you find the best deals on second-hand items.\n\n## Seasonal Patterns\n\n### Spring (March-May)\n- Great time for winter clearance\n- Light jackets and transitional pieces\n- Spring cleaning brings more inventory\n\n### Summer (June-August)\n- Summer clothing at peak availability\n- Sandals and warm-weather gear\n- End-of-season sales\n\n### Fall (September-November)\n- Back-to-school items\n- Transition to winter clothing\n- Good selection of jackets\n\n### Winter (December-February)\n- Holiday shopping increases inventory\n- Winter gear and boots\n- Coats and warm accessories\n\n## Best Days to Shop\n\n- **Weekday Mornings**: Less crowded, fresh inventory\n- **After Holidays**: People clearing out unwanted gifts\n- **End of Month**: Rent/mortgage pressure increases listings\n\n## Sales Cycles\n\n- End-of-season clearances\n- Holiday sales\n- Store closing events\n- Special promotion days\n\n## Pro Tips\n\n1. Shop off-season for best prices\n2. Follow your favorite sellers\n3. Set up alerts for specific items\n4. Visit regularly for new arrivals\n5. Build relationships with shop owners\n\n## Online vs. In-Person\n\n- **Online**: More selection, competitive pricing\n- **In-Person**: Can inspect items, immediate purchase\n\n## Conclusion\n\nUnderstanding seasonal patterns helps you shop smarter and find better deals throughout the year.",
+      "description": "Discover the best times of year to shop for second-hand items, seasonal patterns, and tips for finding the best deals.",
+      "publishedAt": "2025-02-08T11:20:00.000Z",
+      "createdAt": "2025-02-08T11:20:00.000Z",
+      "updatedAt": "2025-02-08T11:20:00.000Z"
+    },
+    {
+      "documentId": "art12",
+      "title": "Sizing Guide: How to Buy the Right Fit Online",
+      "slug": "sizing-guide-buy-right-fit-online",
+      "content": "# Sizing Guide: How to Buy the Right Fit Online\n\nBuying second-hand online requires careful attention to sizing. Here's how to get it right.\n\n## Understanding Size Charts\n\n### Measurements to Know\n- **Bust/Chest**: Around the fullest part\n- **Waist**: Natural waistline\n- **Hips**: Widest part of hips\n- **Inseam**: Inside leg length\n- **Shoe Size**: Both length and width\n\n## Brand Variations\n\nSizes vary significantly between brands:\n- European vs. US sizing\n- Asian sizing (often smaller)\n- Vintage sizing (different standards)\n- Unisex vs. gender-specific\n\n## How to Measure\n\n1. Use a flexible measuring tape\n2. Measure over thin clothing\n3. Keep tape level and snug\n4. Record measurements in both inches and cm\n\n## Reading Listings\n\nLook for:\n- Actual measurements (not just size numbers)\n- Fit descriptions\n- Photos showing fit\n- Seller's return policy\n\n## Common Mistakes\n\n- Assuming your size is consistent\n- Not checking measurements\n- Ignoring fit descriptions\n- Not considering fabric stretch\n\n## Tips for Success\n\n1. Always check measurements\n2. Compare to items you own\n3. Ask sellers for additional measurements\n4. Consider alterations if needed\n5. Read reviews of sellers\n\n## When in Doubt\n\nIf measurements are close but not exact, consider:\n- Fabric stretch potential\n- Style of the garment\n- Your comfort with fit\n- Alteration costs\n\n## Return Policies\n\nUnderstand return policies before purchasing, especially for final sale items.",
+      "description": "Master online second-hand shopping with this comprehensive sizing guide. Learn how to measure, read listings, and avoid sizing mistakes.",
+      "publishedAt": "2025-02-10T14:15:00.000Z",
+      "createdAt": "2025-02-10T14:15:00.000Z",
+      "updatedAt": "2025-02-10T14:15:00.000Z"
+    },
+    {
+      "documentId": "art13",
+      "title": "Accessories That Transform Any Outfit",
+      "slug": "accessories-transform-any-outfit",
+      "content": "# Accessories That Transform Any Outfit\n\nThe right accessories can elevate any look. Here are the must-have pieces for your wardrobe.\n\n## Essential Accessories\n\n### Bags\n- **Tote**: Versatile everyday bag\n- **Crossbody**: Hands-free convenience\n- **Backpack**: Practical and stylish\n- **Clutch**: Perfect for evenings\n\n### Belts\n- Leather belt in neutral color\n- Statement belt for interest\n- Chain belt for edge\n\n### Jewelry\n- Simple gold or silver pieces\n- Statement necklace\n- Classic watch\n- Hoop earrings\n\n### Hats\n- Baseball cap\n- Beanie for winter\n- Wide-brim hat for summer\n\n### Scarves\n- Silk scarf for elegance\n- Chunky knit for warmth\n- Lightweight for layering\n\n## How to Style\n\n### Minimalist Approach\nChoose one statement piece and keep the rest simple.\n\n### Layered Look\nCombine multiple accessories thoughtfully.\n\n### Color Coordination\nMatch or complement your outfit's color scheme.\n\n## Second-Hand Finds\n\nAccessories are perfect for second-hand shopping:\n- Often in excellent condition\n- Timeless styles\n- Great value\n- Unique vintage pieces\n\n## Investment Pieces\n\nSome accessories are worth investing in:\n- Quality leather bags\n- Classic watches\n- Real jewelry\n- Designer sunglasses\n\n## Care and Maintenance\n\n- Store properly to maintain shape\n- Clean regularly\n- Repair when needed\n- Rotate to prevent wear\n\n## Conclusion\n\nAccessories are the finishing touch that can make any outfit special. Start with basics and build your collection.",
+      "description": "Discover how the right accessories can transform any outfit. Learn which pieces to invest in and how to style them effectively.",
+      "publishedAt": "2025-02-12T10:50:00.000Z",
+      "createdAt": "2025-02-12T10:50:00.000Z",
+      "updatedAt": "2025-02-12T10:50:00.000Z"
+    },
+    {
+      "documentId": "art14",
+      "title": "The Rise of Resale: Market Trends and Statistics",
+      "slug": "rise-resale-market-trends-statistics",
+      "content": "# The Rise of Resale: Market Trends and Statistics\n\nThe resale market is booming. Here's what the data tells us about this growing industry.\n\n## Market Growth\n\nThe second-hand fashion market is projected to reach $77 billion by 2025, growing faster than traditional retail.\n\n## Key Statistics\n\n- 70% of consumers have bought or are open to buying second-hand\n- Gen Z and Millennials drive the trend\n- Online resale platforms see 20%+ annual growth\n- Average savings of 50-70% compared to retail\n\n## Driving Factors\n\n### Economic\n- Cost savings during inflation\n- Side income opportunities\n- Value retention of quality items\n\n### Environmental\n- Growing climate consciousness\n- Waste reduction goals\n- Circular economy support\n\n### Social\n- Social media influence\n- Celebrity endorsements\n- Community building\n\n## Popular Categories\n\n1. **Sneakers**: Highest resale value\n2. **Designer Bags**: Investment pieces\n3. **Denim**: Vintage appeal\n4. **Streetwear**: Cultural significance\n5. **Outerwear**: Quality and durability\n\n## Regional Trends\n\n- **North America**: Largest market\n- **Europe**: Strong sustainability focus\n- **Asia**: Growing rapidly\n- **Online**: Dominating growth\n\n## Future Outlook\n\n- Continued growth expected\n- More brands entering resale\n- Technology improvements\n- Sustainability focus\n\n## Conclusion\n\nThe resale market isn't a trend—it's a fundamental shift in how people shop for fashion.",
+      "description": "Explore the explosive growth of the resale market with key statistics, trends, and insights into what's driving this industry forward.",
+      "publishedAt": "2025-02-15T13:30:00.000Z",
+      "createdAt": "2025-02-15T13:30:00.000Z",
+      "updatedAt": "2025-02-15T13:30:00.000Z"
+    },
+    {
+      "documentId": "art15",
+      "title": "Streetwear Essentials: Building Your Collection",
+      "slug": "streetwear-essentials-building-collection",
+      "content": "# Streetwear Essentials: Building Your Collection\n\nStreetwear has become a dominant force in fashion. Here's how to build an authentic collection.\n\n## Core Pieces\n\n### Tops\n- Graphic tees with meaningful designs\n- Hoodies and sweatshirts\n- Oversized fits\n- Brand collaborations\n\n### Bottoms\n- Baggy jeans\n- Cargo pants\n- Athletic shorts\n- Track pants\n\n### Footwear\n- Classic sneakers (Air Force 1, Stan Smith)\n- High-tops\n- Skate shoes\n- Retro runners\n\n### Outerwear\n- Denim jackets\n- Puffer jackets\n- Windbreakers\n- Bomber jackets\n\n## Key Brands\n\n- **Supreme**: Cult following\n- **Nike**: Timeless classics\n- **Adidas**: Sporty aesthetic\n- **Stüssy**: Original streetwear\n- **Palace**: British streetwear\n- **Off-White**: High-end streetwear\n\n## Building Strategy\n\n1. Start with basics\n2. Add statement pieces gradually\n3. Focus on quality over quantity\n4. Mix high and low\n5. Develop personal style\n\n## Second-Hand Advantages\n\n- Access to rare pieces\n- Better prices\n- Vintage finds\n- Authentic vintage items\n\n## Styling Tips\n\n- Mix casual with elevated pieces\n- Play with proportions\n- Layer thoughtfully\n- Don't overdo logos\n- Confidence is key\n\n## Care and Maintenance\n\n- Follow care labels\n- Store properly\n- Clean regularly\n- Preserve special pieces\n\n## Conclusion\n\nBuilding a streetwear collection takes time. Focus on pieces you love and that reflect your personal style.",
+      "description": "Learn how to build an authentic streetwear collection, from essential pieces to key brands and styling tips for the modern streetwear enthusiast.",
+      "publishedAt": "2025-02-18T16:00:00.000Z",
+      "createdAt": "2025-02-18T16:00:00.000Z",
+      "updatedAt": "2025-02-18T16:00:00.000Z"
+    },
+    {
+      "documentId": "art16",
+      "title": "Denim Care: Keeping Your Jeans Looking Fresh",
+      "slug": "denim-care-keeping-jeans-looking-fresh",
+      "content": "# Denim Care: Keeping Your Jeans Looking Fresh\n\nProper denim care extends the life of your jeans and maintains their appearance.\n\n## Washing Guidelines\n\n### Frequency\n- Wash only when necessary\n- Spot clean when possible\n- Air out between wears\n- Every 5-10 wears is typical\n\n### Method\n- Turn inside out before washing\n- Use cold water\n- Gentle cycle\n- Mild detergent\n- No fabric softener\n\n## Drying\n\n- Air dry is best\n- Hang or lay flat\n- Avoid direct sunlight\n- Never use high heat\n- Tumble dry low if needed\n\n## Storage\n\n- Fold or hang properly\n- Avoid creasing\n- Keep away from moisture\n- Don't over-stack\n\n## Special Care\n\n### Raw Denim\n- First wash after 6 months\n- Soak in cold water\n- Minimal agitation\n- Air dry only\n\n### Stretch Denim\n- Wash inside out\n- Cold water only\n- Air dry to preserve elasticity\n\n### Colored Denim\n- Wash separately first few times\n- Cold water to prevent fading\n- Turn inside out\n\n## Stain Removal\n\n- **Blood**: Cold water immediately\n- **Ink**: Rubbing alcohol\n- **Grease**: Dish soap\n- **Wine**: White wine or club soda\n\n## Maintaining Fit\n\n- Avoid excessive washing\n- Stretch when needed\n- Consider alterations\n- Store properly\n\n## Repair Tips\n\n- Patch holes early\n- Reinforce stress points\n- Professional repairs for major damage\n- DIY for small fixes\n\n## Conclusion\n\nWith proper care, quality denim can last for years and develop beautiful character over time.",
+      "description": "Master the art of denim care with expert tips on washing, drying, storage, and maintenance to keep your jeans looking great for years.",
+      "publishedAt": "2025-02-20T12:25:00.000Z",
+      "createdAt": "2025-02-20T12:25:00.000Z",
+      "updatedAt": "2025-02-20T12:25:00.000Z"
+    },
+    {
+      "documentId": "art17",
+      "title": "Selling Your Clothes: A Beginner's Guide",
+      "slug": "selling-clothes-beginners-guide",
+      "content": "# Selling Your Clothes: A Beginner's Guide\n\nTurn your unused clothing into cash with this comprehensive guide to selling second-hand.\n\n## Getting Started\n\n### What to Sell\n- Items in good condition\n- Brand name or designer pieces\n- Current styles\n- Quality materials\n- Items with tags (if possible)\n\n### What Not to Sell\n- Damaged or stained items\n- Outdated styles\n- Poor quality fast fashion\n- Items with strong odors\n\n## Preparation\n\n### Cleaning\n- Wash or dry clean\n- Remove stains\n- Press or steam\n- Check for damage\n\n### Photography\n- Good lighting is essential\n- Show all angles\n- Include close-ups of details\n- Show tags and labels\n- Flat lay or on hanger\n\n## Pricing Strategy\n\n1. Research similar items\n2. Consider condition\n3. Factor in brand\n4. Check current trends\n5. Be realistic\n\n## Writing Descriptions\n\nInclude:\n- Accurate size and measurements\n- Condition details\n- Brand and style\n- Material composition\n- Any flaws or wear\n- Why you're selling\n\n## Where to Sell\n\n### Online Platforms\n- Dedicated resale apps\n- Social media marketplaces\n- Auction sites\n- Brand-specific platforms\n\n### In-Person\n- Consignment shops\n- Local thrift stores\n- Flea markets\n- Garage sales\n\n## Tips for Success\n\n- Be honest about condition\n- Respond quickly to inquiries\n- Take quality photos\n- Price competitively\n- Provide good customer service\n\n## Common Mistakes\n\n- Overpricing items\n- Poor photos\n- Incomplete descriptions\n- Slow responses\n- Not cleaning items first\n\n## Conclusion\n\nSelling your clothes can be rewarding both financially and environmentally. Start small and learn as you go.",
+      "description": "Learn how to successfully sell your used clothing, from preparation and photography to pricing and choosing the right platform.",
+      "publishedAt": "2025-02-22T14:40:00.000Z",
+      "createdAt": "2025-02-22T14:40:00.000Z",
+      "updatedAt": "2025-02-22T14:40:00.000Z"
+    },
+    {
+      "documentId": "art18",
+      "title": "Athletic Wear: Performance Meets Style",
+      "slug": "athletic-wear-performance-meets-style",
+      "content": "# Athletic Wear: Performance Meets Style\n\nModern athletic wear combines functionality with fashion. Here's what to look for.\n\n## Key Features\n\n### Performance\n- Moisture-wicking materials\n- Breathable fabrics\n- Stretch and flexibility\n- Durability\n- Quick-dry technology\n\n### Style\n- Modern silhouettes\n- Versatile colors\n- Trendy designs\n- Brand aesthetics\n\n## Top Brands\n\n### Nike\n- Innovation leader\n- Wide range of styles\n- Strong resale value\n\n### Adidas\n- Classic designs\n- Performance focus\n- Sustainable options\n\n### Lululemon\n- Premium quality\n- Technical fabrics\n- High resale value\n\n### Under Armour\n- Performance-first\n- Athletic focus\n\n## What to Look For\n\n- Quality materials\n- Proper fit\n- Intended use\n- Brand reputation\n- Condition\n\n## Second-Hand Considerations\n\n- Check for pilling\n- Inspect seams\n- Test elasticity\n- Check for odors\n- Verify authenticity\n\n## Care Instructions\n\n- Follow care labels\n- Avoid fabric softener\n- Air dry when possible\n- Store properly\n- Clean regularly\n\n## Styling Tips\n\n- Mix athletic and casual\n- Layer thoughtfully\n- Choose versatile pieces\n- Don't overdo logos\n- Comfort is key\n\n## Investment Pieces\n\n- Quality leggings\n- Performance jackets\n- Technical sneakers\n- Versatile tops\n\n## Conclusion\n\nAthletic wear has evolved beyond the gym. Quality pieces offer both performance and style for everyday wear.",
+      "description": "Discover how to choose quality athletic wear that combines performance features with modern style, and learn what to look for when buying second-hand.",
+      "publishedAt": "2025-02-25T10:15:00.000Z",
+      "createdAt": "2025-02-25T10:15:00.000Z",
+      "updatedAt": "2025-02-25T10:15:00.000Z"
+    },
+    {
+      "documentId": "art19",
+      "title": "Minimalist Fashion: Less is More",
+      "slug": "minimalist-fashion-less-is-more",
+      "content": "# Minimalist Fashion: Less is More\n\nThe minimalist fashion movement emphasizes quality, versatility, and simplicity.\n\n## Core Principles\n\n### Quality Over Quantity\n- Invest in well-made pieces\n- Choose durable materials\n- Focus on craftsmanship\n- Buy less, but better\n\n### Versatility\n- Items that work multiple ways\n- Mix and match potential\n- Timeless designs\n- Neutral color palette\n\n### Simplicity\n- Clean lines\n- Minimal details\n- Subtle patterns\n- Focus on fit\n\n## Building a Minimalist Wardrobe\n\n### Essential Pieces\n- White button-down\n- Quality t-shirts\n- Well-fitting jeans\n- Neutral blazer\n- Classic sneakers\n- Leather boots\n\n### Color Palette\n- Black, white, gray\n- Navy, beige\n- Occasional accent\n\n### Materials\n- Natural fibers\n- Quality cotton\n- Wool and cashmere\n- Leather\n\n## Benefits\n\n- Easier decisions\n- Less clutter\n- More sustainable\n- Saves money long-term\n- Always looks polished\n\n## Second-Hand Advantages\n\n- Access to quality pieces\n- Better prices\n- Vintage minimalist finds\n- Sustainable choice\n\n## Styling Tips\n\n- Focus on fit\n- Play with proportions\n- Add texture\n- Use accessories sparingly\n- Confidence is key\n\n## Maintenance\n\n- Proper care extends life\n- Quality pieces last longer\n- Easy to maintain\n- Timeless appeal\n\n## Conclusion\n\nMinimalist fashion isn't about deprivation—it's about choosing pieces that truly serve you and your style.",
+      "description": "Explore the minimalist fashion philosophy and learn how to build a versatile, sustainable wardrobe focused on quality and simplicity.",
+      "publishedAt": "2025-02-27T15:30:00.000Z",
+      "createdAt": "2025-02-27T15:30:00.000Z",
+      "updatedAt": "2025-02-27T15:30:00.000Z"
+    },
+    {
+      "documentId": "art20",
+      "title": "Winter Wardrobe Essentials: Staying Warm in Style",
+      "slug": "winter-wardrobe-essentials-staying-warm-style",
+      "content": "# Winter Wardrobe Essentials: Staying Warm in Style\n\nBuild a winter wardrobe that keeps you warm without sacrificing style.\n\n## Outerwear\n\n### Coats\n- Wool coat for elegance\n- Puffer jacket for warmth\n- Trench coat for versatility\n- Parka for extreme cold\n\n### Jackets\n- Denim jacket for layering\n- Leather jacket for edge\n- Fleece for casual\n\n## Layering Pieces\n\n### Base Layers\n- Thermal underwear\n- Long-sleeve tees\n- Turtlenecks\n\n### Mid Layers\n- Sweaters and cardigans\n- Hoodies\n- Flannel shirts\n\n## Footwear\n\n### Boots\n- Ankle boots\n- Knee-high boots\n- Weatherproof options\n- Insulated boots\n\n### Sneakers\n- Weather-resistant\n- Warm linings\n- Good traction\n\n## Accessories\n\n### Headwear\n- Beanies\n- Hats\n- Ear muffs\n\n### Handwear\n- Gloves\n- Mittens\n- Touchscreen compatible\n\n### Scarves\n- Wool scarves\n- Infinity scarves\n- Blanket scarves\n\n## Materials to Look For\n\n- Wool for warmth\n- Down for insulation\n- Fleece for comfort\n- Waterproof materials\n- Wind-resistant fabrics\n\n## Second-Hand Shopping Tips\n\n- Check for wear in high-stress areas\n- Inspect zippers and closures\n- Test insulation\n- Look for quality brands\n- Consider alterations\n\n## Styling Tips\n\n- Layer thoughtfully\n- Mix textures\n- Add color strategically\n- Balance proportions\n- Don't forget accessories\n\n## Care and Maintenance\n\n- Follow care labels\n- Store properly\n- Clean regularly\n- Repair promptly\n- Protect from moths\n\n## Conclusion\n\nA well-planned winter wardrobe keeps you comfortable and stylish through the coldest months.",
+      "description": "Discover essential winter wardrobe pieces that combine warmth and style, from outerwear to accessories, with tips for second-hand shopping.",
+      "publishedAt": "2025-03-01T11:00:00.000Z",
+      "createdAt": "2025-03-01T11:00:00.000Z",
+      "updatedAt": "2025-03-01T11:00:00.000Z"
+    },
+    {
+      "documentId": "art21",
+      "title": "The Art of Mixing High and Low Fashion",
+      "slug": "art-mixing-high-low-fashion",
+      "content": "# The Art of Mixing High and Low Fashion\n\nMaster the skill of combining designer pieces with affordable finds for a unique, personal style.\n\n## The Concept\n\nMixing high-end and budget pieces creates interesting, personalized looks that don't break the bank.\n\n## Strategy\n\n### Investment Pieces\n- Designer bags\n- Quality outerwear\n- Statement shoes\n- Classic accessories\n\n### Budget Finds\n- Basic tees\n- Simple jeans\n- Affordable accessories\n- Trendy pieces\n\n## How to Mix\n\n### Balance\n- One statement piece per outfit\n- Let expensive items shine\n- Use basics as foundation\n- Don't overdo it\n\n### Color Coordination\n- Cohesive color palette\n- Let quality pieces stand out\n- Neutral basics work best\n\n### Proportions\n- Mix fitted and loose\n- Play with silhouettes\n- Balance textures\n\n## Second-Hand Advantage\n\n- Access to designer at lower prices\n- Unique vintage finds\n- Better value\n- Sustainable choice\n\n## Examples\n\n- Designer bag with fast-fashion outfit\n- Vintage designer jacket with basics\n- High-end shoes with simple jeans\n- Statement jewelry with simple dress\n\n## Tips for Success\n\n1. Know your style\n2. Invest in versatile pieces\n3. Don't be afraid to experiment\n4. Quality over quantity for investment pieces\n5. Basics can be affordable\n\n## Common Mistakes\n\n- Over-accessorizing\n- Too many statement pieces\n- Ignoring fit\n- Not considering proportions\n\n## Building Your Mix\n\nStart with:\n- One designer bag\n- Quality outerwear\n- Classic shoes\n- Simple basics\n\n## Conclusion\n\nMixing high and low fashion is an art that allows you to express personal style while being budget-conscious. It's all about balance and confidence.",
+      "description": "Learn how to masterfully combine designer pieces with affordable finds to create stylish, budget-friendly outfits that reflect your personal style.",
+      "publishedAt": "2025-03-03T13:45:00.000Z",
+      "createdAt": "2025-03-03T13:45:00.000Z",
+      "updatedAt": "2025-03-03T13:45:00.000Z"
+    }
+  ]
 }

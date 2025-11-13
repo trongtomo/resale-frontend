@@ -1,6 +1,15 @@
 export function formatDate(date, options = {}) {
   if (!date) return ''
   
+  // If format is 'DD-MM-YYYY', use custom formatting
+  if (options.format === 'DD-MM-YYYY') {
+    const d = new Date(date)
+    const day = String(d.getDate()).padStart(2, '0')
+    const month = String(d.getMonth() + 1).padStart(2, '0')
+    const year = d.getFullYear()
+    return `${day}-${month}-${year}`
+  }
+  
   const defaultOptions = {
     year: 'numeric',
     month: 'short',

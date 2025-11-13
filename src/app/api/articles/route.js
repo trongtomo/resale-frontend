@@ -53,15 +53,23 @@ export async function POST(request) {
     const fileData = await readFile(articlesFile, 'utf8')
     const data = JSON.parse(fileData)
     
+    // Ensure articles array exists
+    if (!data.articles || !Array.isArray(data.articles)) {
+      data.articles = []
+    }
+    
     // Generate new ID
-    const maxId = Math.max(...data.articles.map(a => parseInt(a.documentId?.replace('art', '') || '0') || 0), 0)
+    const articleIds = data.articles.length > 0
+      ? data.articles.map(a => parseInt(a.documentId?.replace('art', '') || '0') || 0)
+      : []
+    const maxId = articleIds.length > 0 ? Math.max(...articleIds) : 0
     const newId = `art${maxId + 1}`
     
     // Generate slug from title if not provided
-    const slug = body.slug || body.title
+    const slug = body.slug || (body.title ? body.title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '')
+      .replace(/^-+|-+$/g, '') : '')
     
     // Check if slug already exists
     const existingArticle = data.articles.find(a => a.slug === slug)

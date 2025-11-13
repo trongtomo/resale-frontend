@@ -1,16 +1,19 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import '@uiw/react-md-editor/markdown-editor.css'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
-export default function CreateBlogPage() {
+export default function EditBlogPage() {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
+  const params = useParams()
+  const articleSlug = params?.id // This is actually the slug now
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [formData, setFormData] = useState({
     title: '',
@@ -20,21 +23,34 @@ export default function CreateBlogPage() {
     cover: null
   })
 
+  useEffect(() => {
+    // Load article data
+    if (articleSlug) {
+      fetch(`/api/articles/${articleSlug}`)
+        .then(res => res.json())
+        .then(data => {
+          const article = data.data?.[0]
+          if (article) {
+            setFormData({
+              title: article.title || '',
+              slug: article.slug || '',
+              content: article.content || '',
+              description: article.description || '',
+              cover: article.cover || null
+            })
+          }
+        })
+        .catch(err => console.error('Error loading article:', err))
+        .finally(() => setLoading(false))
+    }
+  }, [articleSlug])
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
       [name]: value
     }))
-
-    // Auto-generate slug from title
-    if (name === 'title' && !formData.slug) {
-      const slug = value
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '')
-      setFormData(prev => ({ ...prev, slug }))
-    }
   }
 
   const handleContentChange = (value) => {
@@ -79,13 +95,45 @@ export default function CreateBlogPage() {
     }
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+  const handleDeleteCover = async () => {
+    if (!formData.cover?.url) return
 
     try {
-      const response = await fetch('/api/articles', {
-        method: 'POST',
+      // Extract public_id from Cloudinary URL
+      const url = formData.cover.url
+      const publicIdMatch = url.match(/\/v\d+\/(.+)\.[^.]+$/)
+      
+      if (publicIdMatch) {
+        const publicId = publicIdMatch[1]
+        const response = await fetch('/api/upload/delete', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ publicId })
+        })
+
+        if (!response.ok) {
+          throw new Error('Delete failed')
+        }
+      }
+    } catch (error) {
+      console.error('Error deleting cover:', error)
+    }
+
+    setFormData(prev => ({
+      ...prev,
+      cover: null
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setSaving(true)
+
+    try {
+      const response = await fetch(`/api/articles/${articleSlug}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -94,16 +142,26 @@ export default function CreateBlogPage() {
 
       if (!response.ok) {
         const error = await response.json()
-        throw new Error(error.error || 'Failed to create article')
+        throw new Error(error.error || 'Failed to update article')
       }
 
       router.push('/admin/blog')
     } catch (error) {
-      console.error('Error creating article:', error)
-      alert(error.message || 'Failed to create article')
+      console.error('Error updating article:', error)
+      alert(error.message || 'Failed to update article')
     } finally {
-      setLoading(false)
+      setSaving(false)
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-gray-600">Loading article...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -116,7 +174,7 @@ export default function CreateBlogPage() {
         </div>
 
         <div className="bg-white shadow rounded-lg p-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-6">Create New Blog Post</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-6">Edit Blog Post</h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -191,12 +249,19 @@ export default function CreateBlogPage() {
               {uploading && <p className="text-sm text-gray-500">Uploading...</p>}
               
               {formData.cover && (
-                <div className="mt-4">
+                <div className="mt-4 relative">
                   <img
                     src={formData.cover.url}
-                    alt={formData.cover.alternativeText}
+                    alt={formData.cover.alternativeText || formData.title}
                     className="w-full h-64 object-cover rounded border"
                   />
+                  <button
+                    type="button"
+                    onClick={handleDeleteCover}
+                    className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                  >
+                    Delete
+                  </button>
                 </div>
               )}
             </div>
@@ -210,10 +275,10 @@ export default function CreateBlogPage() {
               </Link>
               <button
                 type="submit"
-                disabled={loading}
+                disabled={saving}
                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
               >
-                {loading ? 'Creating...' : 'Create Post'}
+                {saving ? 'Saving...' : 'Save Changes'}
               </button>
             </div>
           </form>

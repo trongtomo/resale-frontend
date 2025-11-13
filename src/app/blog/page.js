@@ -1,5 +1,6 @@
 import MarkdownRenderer from '@/components/MarkdownRenderer'
 import Pagination from '@/components/Pagination'
+import BlogBreadcrumb from '@/components/BlogBreadcrumb'
 import { getArticles } from '@/services/articles'
 import { formatDate, truncateText } from '@/utils/format'
 import Link from 'next/link'
@@ -33,6 +34,7 @@ export default async function BlogPage({ searchParams }) {
     <div className="min-h-screen">
       <div className="bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <BlogBreadcrumb />
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Blog</h1>
             <p className="text-lg text-gray-600">Read our latest articles and insights</p>
@@ -58,7 +60,7 @@ export default async function BlogPage({ searchParams }) {
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {articles.map((article) => (
                     <Link
-                      key={article.id}
+                      key={article.documentId || article.slug}
                       href={`/blog/${article.slug}`}
                       className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow group"
                     >
@@ -98,14 +100,8 @@ export default async function BlogPage({ searchParams }) {
                         </div>
                         <div className="flex items-center justify-between text-xs text-gray-500">
                           <div>
-                            <p>Published: {formatDate(article.publishedAt)}</p>
-                            {article.author && <p>By: {typeof article.author === 'string' ? article.author : article.author.name || article.author.email || 'Unknown'}</p>}
+                            <p>Published: {formatDate(article.publishedAt, { format: 'DD-MM-YYYY' })}</p>
                           </div>
-                          {article.category && (
-                            <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
-                              {typeof article.category === 'string' ? article.category : article.category.name || article.category.title || 'Category'}
-                            </span>
-                          )}
                         </div>
                       </div>
                     </Link>

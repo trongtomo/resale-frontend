@@ -76,14 +76,6 @@ export default function MobileNavigation({ isOpen, onClose }) {
             >
               Blog
             </Link>
-            
-            <Link 
-              href="/tags" 
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-base font-medium transition-colors"
-              onClick={onClose}
-            >
-              Tags
-            </Link>
           </nav>
         </div>
       </div>

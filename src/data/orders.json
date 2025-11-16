@@ -1,0 +1,28 @@
+{
+  "orders": [
+    {
+      "orderId": "ORD-1763306015105-755",
+      "items": [
+        {
+          "documentId": "1",
+          "name": "Test",
+          "price": 1000000,
+          "quantity": 1
+        }
+      ],
+      "customer": {
+        "fullName": "Nguyen Quoc Trong",
+        "email": "binguyenquoctrong@gmail.com",
+        "phone": "9301481103",
+        "address": "69 Nguyen Phuc",
+        "city": "Ho Chi Minh",
+        "zipCode": "70000",
+        "country": "Vietnam"
+      },
+      "note": "JUST A TEST",
+      "total": 1000000,
+      "status": "pending",
+      "createdAt": "2025-11-16T15:13:35.105Z"
+    }
+  ]
+}

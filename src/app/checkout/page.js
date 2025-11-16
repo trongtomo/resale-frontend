@@ -17,9 +17,9 @@ export default function CheckoutPage() {
     phone: '',
     address: '',
     city: '',
-    state: '',
     zipCode: '',
-    country: ''
+    country: '',
+    note: ''
   })
 
   const [continueShoppingUrl, setContinueShoppingUrl] = useState('/products')
@@ -58,19 +58,32 @@ export default function CheckoutPage() {
       // Save address to cookies
       saveCustomerAddress(formData)
 
-      // Simulate order processing
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      // Submit order to API
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: items,
+          customer: formData,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to place order')
+      }
 
       // Clear cart
       clearCart()
 
-      // Redirect to success page or show success message
-      alert('Order placed successfully! Thank you for your purchase.')
-      router.push(continueShoppingUrl)
+      // Redirect to success page with order ID
+      router.push(`/checkout/success?orderId=${data.orderId}`)
     } catch (error) {
       console.error('Error processing order:', error)
-      alert('There was an error processing your order. Please try again.')
-    } finally {
+      alert(error.message || 'There was an error processing your order. Please try again.')
       setLoading(false)
     }
   }
@@ -176,23 +189,6 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-2">
-                    State/Province *
-                  </label>
-                  <input
-                    type="text"
-                    id="state"
-                    name="state"
-                    required
-                    value={formData.state}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
                   <label htmlFor="zipCode" className="block text-sm font-medium text-gray-700 mb-2">
                     ZIP/Postal Code *
                   </label>
@@ -206,21 +202,36 @@ export default function CheckoutPage() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
+              </div>
 
-                <div>
-                  <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-2">
-                    Country *
-                  </label>
-                  <input
-                    type="text"
-                    id="country"
-                    name="country"
-                    required
-                    value={formData.country}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
+              <div>
+                <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-2">
+                  Country *
+                </label>
+                <input
+                  type="text"
+                  id="country"
+                  name="country"
+                  required
+                  value={formData.country}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="note" className="block text-sm font-medium text-gray-700 mb-2">
+                  Order Note (Optional)
+                </label>
+                <textarea
+                  id="note"
+                  name="note"
+                  rows={4}
+                  value={formData.note}
+                  onChange={handleInputChange}
+                  placeholder="Any special instructions or notes for your order..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 resize-none"
+                />
               </div>
 
               <div className="pt-4">

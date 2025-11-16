@@ -2,26 +2,41 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Pagination from '@/components/Pagination'
 
 export default function AdminBlogPage() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const pageSize = 10
 
-  useEffect(() => {
-    loadArticles()
-  }, [])
 
-  const loadArticles = async () => {
+  const loadArticles = async (page = 1) => {
     try {
       const response = await fetch('/api/articles')
       const data = await response.json()
-      setArticles(data.data || [])
+      const allArticles = data.data || []
+      
+      // Calculate pagination
+      const total = allArticles.length
+      const totalPagesCount = Math.ceil(total / pageSize)
+      setTotalPages(totalPagesCount)
+      
+      // Get paginated articles
+      const startIndex = (page - 1) * pageSize
+      const endIndex = startIndex + pageSize
+      setArticles(allArticles.slice(startIndex, endIndex))
     } catch (error) {
       console.error('Error loading articles:', error)
     } finally {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    loadArticles(currentPage)
+  }, [currentPage])
 
   const handleDelete = async (slug) => {
     if (!confirm('Are you sure you want to delete this article?')) {
@@ -37,7 +52,7 @@ export default function AdminBlogPage() {
         throw new Error('Failed to delete article')
       }
 
-      loadArticles()
+      loadArticles(currentPage)
     } catch (error) {
       console.error('Error deleting article:', error)
       alert('Failed to delete article')
@@ -118,6 +133,25 @@ export default function AdminBlogPage() {
               )}
             </tbody>
           </table>
+          
+          {totalPages > 1 && (
+            <div className="px-6 py-4 border-t">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="mt-6">
+          <Link
+            href="/admin"
+            className="text-blue-600 hover:text-blue-800"
+          >
+            ← Back to Dashboard
+          </Link>
         </div>
       </div>
     </div>

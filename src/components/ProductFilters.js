@@ -1,17 +1,16 @@
 'use client'
 
-import { api } from '@/lib/simple-api'
 import { formatCurrency } from '@/utils/format'
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 
-export default function ProductFilters({ 
-  onFiltersChange, 
+export default function ProductFilters({
+  onFiltersChange,
   currentFilters = {},
   products = [],
-  categorySlug = null
+  categorySlug = null,
+  onToggle,
+  isVisible = false
 }) {
-  const [allBrands, setAllBrands] = useState([])
-  const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
     priceMin: currentFilters.priceMin || '',
     priceMax: currentFilters.priceMax || '',
@@ -20,30 +19,26 @@ export default function ProductFilters({
     selectedBrand: currentFilters.selectedBrand || null
   })
 
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        // Fetch brands filtered by category
-        if (categorySlug) {
-          const data = await api.getBrands(categorySlug)
-          setAllBrands(data.data || [])
-        } else {
-          // No category - show all brands
-          const data = await api.getBrands()
-          setAllBrands(data.brands || [])
+  // Extract unique brands from products
+  const availableBrands = useMemo(() => {
+    const brandMap = new Map()
+
+    products.forEach(product => {
+      if (product.brand && product.brand.documentId) {
+        // Only add if not already in map
+        if (!brandMap.has(product.brand.documentId)) {
+          brandMap.set(product.brand.documentId, {
+            documentId: product.brand.documentId,
+            name: product.brand.name,
+            slug: product.brand.slug
+          })
         }
-      } catch (error) {
-        console.error('Error fetching brands:', error)
-      } finally {
-        setLoading(false)
       }
-    }
+    })
 
-    fetchBrands()
-  }, [categorySlug])
-
-  // Show brands filtered by category
-  const availableBrands = allBrands
+    // Convert map to array and sort by name
+    return Array.from(brandMap.values()).sort((a, b) => a.name.localeCompare(b.name))
+  }, [products])
 
   const handleFilterChange = (key, value) => {
     const newFilters = { ...filters, [key]: value }
@@ -80,13 +75,29 @@ export default function ProductFilters({
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
-        <button
-          onClick={clearFilters}
-          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-        >
-          Clear all
-        </button>
+        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+          {onToggle && (
+            <button
+              onClick={onToggle}
+              className="p-1.5 text-gray-500 hover:text-gray-700 transition-all duration-200"
+              title={isVisible ? 'Hide Filters' : 'Show Filters'}
+              aria-label={isVisible ? 'Hide Filters' : 'Show Filters'}
+            >
+              <span className="hidden md:inline text-sm">
+                {isVisible ? 'Hide Filters' : 'Show Filters'}
+              </span>
+            </button>
+          )}
+        </h3>
+        <div className="flex items-center gap-2">
+
+          <button
+            onClick={clearFilters}
+            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            Clear all
+          </button>
+        </div>
       </div>
 
       {/* Price Range */}
@@ -139,21 +150,20 @@ export default function ProductFilters({
       {/* Brands */}
       <div className="mb-6">
         <h4 className="text-sm font-medium text-gray-900 mb-3">Brands</h4>
-        {loading ? (
-          <div className="text-sm text-gray-500">Loading brands...</div>
+        {availableBrands.length === 0 ? (
+          <div className="text-sm text-gray-500">No brands available</div>
         ) : (
           <div className="flex flex-wrap gap-2">
             {availableBrands.map((brand) => (
               <button
                 key={brand.documentId}
-                onClick={() => handleFilterChange('selectedBrand', 
+                onClick={() => handleFilterChange('selectedBrand',
                   filters.selectedBrand === brand.documentId ? null : brand.documentId
                 )}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                  filters.selectedBrand === brand.documentId
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                className={`px-3 py-1 rounded-full text-sm transition-colors ${filters.selectedBrand === brand.documentId
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
               >
                 {brand.name}
               </button>

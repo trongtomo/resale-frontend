@@ -2,29 +2,44 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { formatCurrency } from '@/utils/format'
+import { formatCurrency, getStatusBadge } from '@/utils/format'
 import DeleteConfirmModal from '@/components/DeleteConfirmModal'
+import Pagination from '@/components/Pagination'
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, product: null })
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const pageSize = 10
 
-  useEffect(() => {
-    loadProducts()
-  }, [])
 
-  const loadProducts = async () => {
+  const loadProducts = async (page = 1) => {
     try {
       const response = await fetch('/api/products?pageSize=1000')
       const data = await response.json()
-      setProducts(data.data || [])
+      const allProducts = data.data || []
+      
+      // Calculate pagination
+      const total = allProducts.length
+      const totalPagesCount = Math.ceil(total / pageSize)
+      setTotalPages(totalPagesCount)
+      
+      // Get paginated products
+      const startIndex = (page - 1) * pageSize
+      const endIndex = startIndex + pageSize
+      setProducts(allProducts.slice(startIndex, endIndex))
     } catch (error) {
       console.error('Error loading products:', error)
     } finally {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    loadProducts(currentPage)
+  }, [currentPage])
 
   const handleDelete = async (id) => {
     try {
@@ -36,7 +51,7 @@ export default function AdminProductsPage() {
         throw new Error('Failed to delete product')
       }
 
-      loadProducts()
+      loadProducts(currentPage)
       setDeleteModal({ isOpen: false, product: null })
     } catch (error) {
       console.error('Error deleting product:', error)
@@ -168,13 +183,7 @@ export default function AdminProductsPage() {
                           {product.brand?.name || '-'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            product.status === 'active'
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-gray-100 text-gray-800'
-                          }`}>
-                            {product.status}
-                          </span>
+                          {getStatusBadge(product.status, 'product')}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
                           <Link
@@ -209,12 +218,31 @@ export default function AdminProductsPage() {
           </div>
         )}
 
+        {totalPages > 1 && (
+          <div className="mt-6">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </div>
+        )}
+
         <DeleteConfirmModal
           isOpen={deleteModal.isOpen}
           onClose={closeDeleteModal}
           onConfirm={() => handleDelete(deleteModal.product?.documentId)}
           productName={deleteModal.product?.name}
         />
+
+        <div className="mt-6">
+          <Link
+            href="/admin"
+            className="text-blue-600 hover:text-blue-800"
+          >
+            ← Back to Dashboard
+          </Link>
+        </div>
       </div>
     </div>
   )

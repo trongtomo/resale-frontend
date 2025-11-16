@@ -34,6 +34,21 @@ export function middleware(request) {
     }
   }
 
+  // Protect orders API - GET, PUT, DELETE require auth, POST is public (for customers)
+  if (pathname.startsWith('/api/orders')) {
+    const method = request.method
+
+    // Protect GET, PUT, DELETE (admin only)
+    if (['GET', 'PUT', 'DELETE'].includes(method)) {
+      if (!adminSession || adminSession.value !== 'authenticated') {
+        return NextResponse.json(
+          { error: 'Unauthorized' },
+          { status: 401 }
+        )
+      }
+    }
+  }
+
   return NextResponse.next()
 }
 
@@ -46,6 +61,7 @@ export const config = {
     '/api/upload/:path*',
     '/api/categories/:path*',
     '/api/brands/:path*',
+    '/api/orders/:path*',
   ],
 }
 

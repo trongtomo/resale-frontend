@@ -6,10 +6,10 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Resale</h3>
             <p className="text-gray-600 text-sm">
-              A clean client commerce storefront built with Next.js.
+              Your go-to spot for affordable, curated footwear.
             </p>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-semibold text-gray-900 mb-4">Quick Links</h4>
             <ul className="space-y-2">
@@ -24,7 +24,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="text-sm font-semibold text-gray-900 mb-4">Connect</h4>
             <ul className="space-y-2">
@@ -37,7 +37,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        
+
         <div className="mt-8 pt-8 border-t border-gray-200">
           <p className="text-center text-gray-500 text-sm">
             © 2025 Resale. All rights reserved.

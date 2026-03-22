@@ -20,7 +20,7 @@ async function setupIndexes() {
     await productsCollection.createIndex({ createdAt: -1 })
     await productsCollection.createIndex({ status: 1 })
     await productsCollection.createIndex({ 'category.slug': 1 })
-    await productsCollection.createIndex({ 'brand.documentId': 1 })
+    await productsCollection.createIndex({ 'brand._id': 1 })
     await productsCollection.createIndex({ price: 1 })
     console.log('✅ Products indexes created')
     
@@ -32,7 +32,7 @@ async function setupIndexes() {
     // Brands collection indexes
     const brandsCollection = db.collection('brands')
     await brandsCollection.createIndex({ slug: 1 }, { unique: true })
-    await brandsCollection.createIndex({ documentId: 1 })
+    await brandsCollection.createIndex({ _id: 1 })
     console.log('✅ Brands indexes created')
     
     console.log('🎉 All indexes created successfully!')

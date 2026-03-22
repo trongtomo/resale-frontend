@@ -17,7 +17,7 @@ const applyFilters = (products, filterParams) => {
   // Apply brand filter
   if (filterParams.brand) {
     filteredProducts = filteredProducts.filter(product => 
-      product.brand?.documentId === filterParams.brand
+      product.brand?._id === filterParams.brand
     )
   }
   
@@ -284,7 +284,7 @@ function ProductsPageClientContent({ initialProducts = [], initialPagination = {
                 {products.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {products.map((product) => (
-                      <div key={product.documentId} className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow overflow-hidden">
+                      <div key={product._id} className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow overflow-hidden">
                         <Link href={`/products/${product.slug}`}>
                           {/* Product Image */}
                           <div className="aspect-square bg-gray-100 overflow-hidden">

@@ -10,9 +10,9 @@ export async function POST() {
         message: 'Database indexes created successfully!',
         indexes: [
           'articles: slug (unique), createdAt, publishedAt',
-          'products: slug (unique), createdAt, status, category.slug, brand.documentId, price',
+          'products: slug (unique), createdAt, status, category.slug, brand._id, price',
           'categories: slug (unique)',
-          'brands: slug (unique), documentId'
+          'brands: slug (unique), _id'
         ]
       })
     } else {

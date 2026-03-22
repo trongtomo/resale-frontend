@@ -252,7 +252,7 @@ export default function CheckoutPage() {
             
             <div className="space-y-4 mb-6">
               {items.map((item) => (
-                <div key={item.documentId} className="flex items-center justify-between py-4 border-b">
+                <div key={item._id} className="flex items-center justify-between py-4 border-b">
                   <div className="flex-1">
                     <h4 className="text-sm font-medium text-gray-900">{item.name}</h4>
                     <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>

@@ -35,7 +35,7 @@ export default function EditProductPage() {
     // Load categories
     fetch('/api/categories')
       .then(res => res.json())
-      .then(data => setCategories(data.categories || []))
+      .then(data => setCategories(data.data || []))
       .catch(err => console.error('Error loading categories:', err))
 
     // Load product data
@@ -53,8 +53,8 @@ export default function EditProductPage() {
               shortDescription: product.shortDescription || '',
               content: product.content || '',
               status: product.status || 'active',
-              category: product.category?.documentId || '',
-              brand: product.brand?.documentId || '',
+              category: product.category?._id || '',
+              brand: product.brand?._id || '',
               images: product.images || []
             })
           }
@@ -144,8 +144,8 @@ export default function EditProductPage() {
 
     try {
       // Find selected category and brand objects
-      const selectedCategory = categories.find(c => c.documentId === formData.category)
-      const selectedBrand = brands.find(b => b.documentId === formData.brand)
+      const selectedCategory = categories.find(c => c._id === formData.category)
+      const selectedBrand = brands.find(b => b._id === formData.brand)
 
       const productData = {
         ...formData,
@@ -300,7 +300,7 @@ export default function EditProductPage() {
               >
                 <option value="">Select a category</option>
                 {categories.map(cat => (
-                  <option key={cat.documentId} value={cat.documentId}>
+                  <option key={cat._id} value={cat._id}>
                     {cat.name}
                   </option>
                 ))}
@@ -321,7 +321,7 @@ export default function EditProductPage() {
               >
                 <option value="">{formData.category ? 'Select a brand' : 'Select category first'}</option>
                 {brands.map(brand => (
-                  <option key={brand.documentId} value={brand.documentId}>
+                  <option key={brand._id} value={brand._id}>
                     {brand.name}
                   </option>
                 ))}

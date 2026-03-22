@@ -24,8 +24,8 @@ export async function getBrands(categorySlug = null) {
     if (categorySlug) {
       const productCol = db.collection('products')
       const products = await productCol.find({ 'category.slug': categorySlug }).toArray()
-      const brandIds = [...new Set(products.map(p => p.brand?.documentId).filter(Boolean))]
-      brands = await col.find({ documentId: { $in: Array.from(brandIds) } }).maxTimeMS(3000).toArray()
+      const brandIds = [...new Set(products.map(p => p.brand?._id).filter(Boolean))]
+      brands = await col.find({ _id: { $in: Array.from(brandIds) } }).maxTimeMS(3000).toArray()
     } else {
       brands = await col.find({}).maxTimeMS(3000).toArray()
     }

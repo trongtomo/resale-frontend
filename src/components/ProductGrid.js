@@ -105,7 +105,11 @@ export default function ProductGrid({ products, categories, pagination, currentF
         {products.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
             {products.map((product) => (
-              <div key={product._id || product.slug} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+              <Link 
+                key={product._id || product.slug} 
+                href={`/products/${product.slug}`}
+                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-lg transition-shadow block"
+              >
                 <div className="aspect-square bg-gray-100 dark:bg-gray-700 relative">
                   {product.images && product.images.length > 0 ? (
                     <Image
@@ -141,9 +145,8 @@ export default function ProductGrid({ products, categories, pagination, currentF
                       </span>
                     )}
                   </div>
-                  <AddToCartButton product={product} className="w-full" />
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         ) : (

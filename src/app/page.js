@@ -62,7 +62,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {products.map((product) => (
                 <Link
-                  key={product.documentId}
+                  key={product._id}
                   href={`/products/${product.slug}`}
                   className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-xl dark:hover:shadow-gray-600 transition-all duration-300 group"
                 >
@@ -130,7 +130,7 @@ export default async function Home() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {categories.map((category) => (
                 <Link
-                  key={category.documentId}
+                  key={category._id}
                   href={`/products?category=${category.slug}`}
                   className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-6 hover:shadow-lg dark:hover:shadow-gray-600 transition-all duration-300 text-center group"
                 >

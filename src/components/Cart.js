@@ -65,7 +65,7 @@ export default function Cart({ isOpen, onClose }) {
           ) : (
             <div className="space-y-4">
               {items.map((item) => (
-                <div key={item.documentId} className="flex items-center space-x-4 py-4 border-b">
+                <div key={item._id} className="flex items-center space-x-4 py-4 border-b">
                   <div className="flex-shrink-0">
                     <div className="h-16 w-16 bg-gray-100 rounded-lg flex items-center justify-center">
                       <svg className="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,7 +81,7 @@ export default function Cart({ isOpen, onClose }) {
                   
                   <div className="flex items-center space-x-2">
                     <button
-                      onClick={() => updateQuantity(item.documentId, item.quantity - 1)}
+                      onClick={() => updateQuantity(item._id, item.quantity - 1)}
                       className="text-gray-400 hover:text-gray-600"
                     >
                       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,7 +90,7 @@ export default function Cart({ isOpen, onClose }) {
                     </button>
                     <span className="text-sm font-medium text-gray-900 w-8 text-center">{item.quantity}</span>
                     <button
-                      onClick={() => updateQuantity(item.documentId, item.quantity + 1)}
+                      onClick={() => updateQuantity(item._id, item.quantity + 1)}
                       className="text-gray-400 hover:text-gray-600"
                     >
                       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@ export default function Cart({ isOpen, onClose }) {
                   </div>
                   
                   <button
-                    onClick={() => removeFromCart(item.documentId)}
+                    onClick={() => removeFromCart(item._id)}
                     className="text-red-400 hover:text-red-600"
                   >
                     <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

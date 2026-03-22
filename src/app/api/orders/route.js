@@ -19,8 +19,8 @@ export async function POST(request) {
     const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
     const order = {
       orderId: generateOrderId(),
-      items: items.map(({ documentId, name, price, quantity }) =>
-        ({ documentId, name, price, quantity })),
+      items: items.map(({ _id, name, price, quantity }) =>
+        ({ productId: _id, name, price, quantity })),
       customer,
       note: customer.note || '',
       total,

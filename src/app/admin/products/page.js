@@ -74,9 +74,9 @@ export default function AdminProductsPage() {
 
   const handleDisable = async (product) => {
     try {
-      setUpdatingId(product.documentId || product._id)
+      setUpdatingId(product._id)
       const newStatus = product.status === 'active' ? 'inactive' : 'active'
-      const response = await fetch(`/api/products/${product.documentId || product._id}`, {
+      const response = await fetch(`/api/products/${product._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -94,7 +94,7 @@ export default function AdminProductsPage() {
       // Update local state immediately
       setProducts(prevProducts =>
         prevProducts.map(p =>
-          (p.documentId === product.documentId || p._id === product._id)
+          p._id === product._id
             ? { ...p, status: newStatus }
             : p
         )
@@ -218,7 +218,7 @@ export default function AdminProductsPage() {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {productsByCategory[categoryName].map((product) => (
-                      <tr key={product.documentId || product._id}>
+                      <tr key={product._id}>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">{product.name}</div>
                           <div className="text-sm text-gray-500">{product.slug}</div>
@@ -234,25 +234,25 @@ export default function AdminProductsPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
                           <Link
-                            href={`/admin/products/${product.documentId || product._id}/edit`}
+                            href={`/admin/products/${product._id}/edit`}
                             className="text-blue-600 hover:text-blue-900 transition-colors"
                           >
                             Edit
                           </Link>
                           <button
                             onClick={() => handleDisable(product)}
-                            disabled={updatingId === (product.documentId || product._id)}
+                            disabled={updatingId === (product._id)}
                             className={`${
                               product.status === 'active'
                                 ? 'text-yellow-600 hover:text-yellow-900'
                                 : 'text-green-600 hover:text-green-900'
                             } ${
-                              updatingId === (product.documentId || product._id) 
+                              updatingId === (product._id) 
                                 ? 'opacity-50 cursor-not-allowed' 
                                 : ''
                             } transition-colors`}
                           >
-                            {updatingId === (product.documentId || product._id) ? (
+                            {updatingId === (product._id) ? (
                               <span className="flex items-center">
                                 <svg className="animate-spin h-4 w-4 mr-1" viewBox="0 0 24 24">
                                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
@@ -266,14 +266,14 @@ export default function AdminProductsPage() {
                           </button>
                           <button
                             onClick={() => openDeleteModal(product)}
-                            disabled={deletingId === (product.documentId || product._id)}
+                            disabled={deletingId === (product._id)}
                             className={`text-red-600 hover:text-red-900 transition-colors ${
-                              deletingId === (product.documentId || product._id) 
+                              deletingId === (product._id) 
                                 ? 'opacity-50 cursor-not-allowed' 
                                 : ''
                             }`}
                           >
-                            {deletingId === (product.documentId || product._id) ? (
+                            {deletingId === (product._id) ? (
                               <span className="flex items-center">
                                 <svg className="animate-spin h-4 w-4 mr-1" viewBox="0 0 24 24">
                                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
@@ -308,7 +308,7 @@ export default function AdminProductsPage() {
         <DeleteConfirmModal
           isOpen={deleteModal.isOpen}
           onClose={closeDeleteModal}
-          onConfirm={() => handleDelete(deleteModal.product?.documentId || deleteModal.product?._id)}
+          onConfirm={() => handleDelete(deleteModal.product?._id?.toString())}
           productName={deleteModal.product?.name}
         />
 

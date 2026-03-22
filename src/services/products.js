@@ -17,11 +17,18 @@ export async function getProducts(page = 1, pageSize = 12, filters = {}) {
       if (ObjectId.isValid(filters.category)) {
         query['category._id'] = new ObjectId(filters.category)
       } else {
-        // If not ObjectId, treat as slug
-        query['category.slug'] = filters.category
+        // If not ObjectId, it's a slug - find category first
+        const categoryCol = db.collection('categories')
+        const category = await categoryCol.findOne({ slug: filters.category })
+        if (category) {
+          query['category._id'] = category._id
+        } else {
+          // Fallback: try to query by slug directly (for backward compatibility)
+          query['category.slug'] = filters.category
+        }
       }
     }
-    if (filters.selectedBrand) query['brand.documentId'] = filters.selectedBrand
+    if (filters.selectedBrand) query['brand._id'] = new ObjectId(filters.selectedBrand)
     if (filters.priceMin || filters.priceMax) {
       query.price = {}
       if (filters.priceMin) query.price.$gte = parseInt(filters.priceMin)
@@ -43,8 +50,31 @@ export async function getProducts(page = 1, pageSize = 12, filters = {}) {
       .maxTimeMS(5000)
       .toArray()
 
+    // Populate category and brand data
+    const populatedProducts = await Promise.all(
+      products.map(async (product) => {
+        let populatedProduct = { ...product }
+        
+        // Populate category if it exists
+        if (product.category && product.category._id) {
+          const categoryCol = db.collection('categories')
+          const category = await categoryCol.findOne({ _id: product.category._id })
+          populatedProduct.category = category
+        }
+        
+        // Populate brand if it exists
+        if (product.brand && product.brand._id) {
+          const brandCol = db.collection('brands')
+          const brand = await brandCol.findOne({ _id: product.brand._id })
+          populatedProduct.brand = brand
+        }
+        
+        return populatedProduct
+      })
+    )
+
     return {
-      data: products,
+      data: populatedProducts,
       meta: { pagination: { page, pageSize, pageCount: Math.ceil(total / pageSize), total } }
     }
   } catch (error) {

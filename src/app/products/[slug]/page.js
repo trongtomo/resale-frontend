@@ -69,14 +69,28 @@ export default async function ProductPage({ params }) {
     )
   }
 
+  // Serialize product data for client components
+  const serializedProduct = product ? {
+    ...product,
+    _id: product._id?.toString(),
+    category: product.category ? {
+      ...product.category,
+      _id: product.category._id?.toString()
+    } : null,
+    brand: product.brand ? {
+      ...product.brand,
+      _id: product.brand._id?.toString()
+    } : null
+  } : null
+
   return (
     <div className="min-h-screen">
-      <ProductPageClient product={product} />
+      <ProductPageClient product={serializedProduct} />
       <div className="bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
             <Link href="/" className="hover:text-gray-900">Home</Link>
-            {product.category && (
+            {product?.category?.slug && (
               <>
                 <span className="text-gray-400">/</span>
                 <Link 

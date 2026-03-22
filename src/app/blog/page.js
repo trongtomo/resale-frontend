@@ -60,7 +60,7 @@ export default async function BlogPage({ searchParams }) {
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {articles.map((article) => (
                     <Link
-                      key={article.documentId || article.slug}
+                      key={article._id || article.slug}
                       href={`/blog/${article.slug}`}
                       className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-lg dark:hover:shadow-gray-600 transition-shadow group"
                     >

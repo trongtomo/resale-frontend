@@ -147,7 +147,7 @@ export default function AdminBlogPage() {
                 </tr>
               ) : (
                 articles.map((article) => (
-                  <tr key={article._id || article.documentId}>
+                  <tr key={article._id || article.slug}>
                     <td className="px-6 py-4">
                       <div className="text-sm font-medium text-gray-900">{article.title}</div>
                       <div className="text-sm text-gray-500">{article.slug}</div>

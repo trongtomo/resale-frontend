@@ -17,6 +17,7 @@ export async function GET(request) {
     
     const db = await getDb()
     const collection = db.collection('products')
+    const categoryCollection = db.collection('categories')
     
     let query = {}
     if (categorySlug) {
@@ -24,8 +25,14 @@ export async function GET(request) {
       if (ObjectId.isValid(categorySlug)) {
         query['category._id'] = new ObjectId(categorySlug)
       } else {
-        // If not ObjectId, treat as slug
-        query['category.slug'] = categorySlug
+        // If not ObjectId, it's a slug - find category first
+        const category = await categoryCollection.findOne({ slug: categorySlug })
+        if (category) {
+          query['category._id'] = category._id
+        } else {
+          // Fallback: try to query by slug directly
+          query['category.slug'] = categorySlug
+        }
       }
     }
     

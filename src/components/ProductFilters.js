@@ -24,11 +24,11 @@ export default function ProductFilters({
     const brandMap = new Map()
 
     products.forEach(product => {
-      if (product.brand && product.brand.documentId) {
+      if (product.brand && product.brand._id) {
         // Only add if not already in map
-        if (!brandMap.has(product.brand.documentId)) {
-          brandMap.set(product.brand.documentId, {
-            documentId: product.brand.documentId,
+        if (!brandMap.has(product.brand._id)) {
+          brandMap.set(product.brand._id, {
+            _id: product.brand._id,
             name: product.brand.name,
             slug: product.brand.slug
           })
@@ -156,11 +156,11 @@ export default function ProductFilters({
           <div className="flex flex-wrap gap-2">
             {availableBrands.map((brand) => (
               <button
-                key={brand.documentId}
+                key={brand._id}
                 onClick={() => handleFilterChange('selectedBrand',
-                  filters.selectedBrand === brand.documentId ? null : brand.documentId
+                  filters.selectedBrand === brand._id ? null : brand._id
                 )}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${filters.selectedBrand === brand.documentId
+                className={`px-3 py-1 rounded-full text-sm transition-colors ${filters.selectedBrand === brand._id
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}

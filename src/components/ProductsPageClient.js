@@ -1,6 +1,5 @@
 'use client'
 
-import { api } from '@/lib/simple-api'
 import { getContextText, getPageTitle } from '@/utils/contextText'
 import { formatCurrency, truncateText } from '@/utils/format'
 import Link from 'next/link'

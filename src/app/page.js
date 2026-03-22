@@ -1,5 +1,6 @@
 import AddToCartButton from '@/components/AddToCartButton'
-import { api } from '@/lib/simple-api'
+import { getCategories } from '@/services/categories'
+import { getProducts } from '@/services/products'
 import { formatCurrency } from '@/utils/format'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,11 +12,11 @@ export default async function Home() {
 
   try {
     const [categoriesData, productsData] = await Promise.all([
-      api.getMainCategories(),
-      api.getAllProducts()
+      getCategories(),
+      getProducts(1, 8)
     ])
-    categories = categoriesData.categories || []
-    products = (productsData.products || []).filter(p => p.status === 'active').slice(0, 8)
+    categories = categoriesData.data || []
+    products = productsData.data || []
   } catch (err) {
     error = err.message
     console.error('Failed to fetch data:', err)

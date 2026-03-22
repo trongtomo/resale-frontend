@@ -2,7 +2,7 @@ import AddToCartButton from '@/components/AddToCartButton'
 import MarkdownRenderer from '@/components/MarkdownRenderer'
 import ProductPageClient from '@/components/ProductPageClient'
 import ProductImageGallery from '@/components/ProductImageGallery'
-import { api } from '@/lib/simple-api'
+import { getProductBySlug } from '@/services/products'
 import { formatCurrency, formatDate } from '@/utils/format'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -13,8 +13,8 @@ export async function generateMetadata({ params }) {
   const { slug } = await params
   
   try {
-    const data = await api.getProduct(slug)
-    const product = data.products?.[0]
+    const data = await getProductBySlug(slug)
+    const product = data.data?.[0]
     
     if (!product) {
       return {
@@ -41,8 +41,8 @@ export default async function ProductPage({ params }) {
   let error = null
 
   try {
-    const data = await api.getProduct(slug)
-    product = data.products?.[0]
+    const data = await getProductBySlug(slug)
+    product = data.data?.[0]
     
     if (!product) {
       notFound()

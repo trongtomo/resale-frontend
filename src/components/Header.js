@@ -1,6 +1,5 @@
 'use client'
 
-import { api } from '@/lib/simple-api'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Cart from './Cart'
@@ -18,9 +17,10 @@ export default function Header() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        // Get all categories for the main menu
-        const data = await api.getAllCategories()
-        setCategories(data.categories || [])
+        // Get all categories for the main menu via API
+        const response = await fetch('/api/categories')
+        const data = await response.json()
+        setCategories(data.data || [])
       } catch (error) {
         console.error('Error fetching categories:', error)
       } finally {

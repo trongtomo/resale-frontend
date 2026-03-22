@@ -1,7 +1,5 @@
 'use client'
 
-import { getCategoryProducts } from '@/services/categoryProducts'
-import { getProducts } from '@/services/products'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -22,18 +20,21 @@ export default function ProductsDropdown() {
       try {
         console.log('Starting to fetch dropdown data...')
         
-        // Get all categories and products
-        const [categoryProductsData, productsData] = await Promise.all([
-          getCategoryProducts({ populate: 'parent' }),
-          getProducts(1, 100, { populate: '*' })
+        // Get all categories and products via API
+        const [categoriesResponse, productsResponse] = await Promise.all([
+          fetch('/api/categories'),
+          fetch('/api/products?page=1&pageSize=100')
         ])
         
-        console.log('All Categories:', categoryProductsData)
+        const categoriesData = await categoriesResponse.json()
+        const productsData = await productsResponse.json()
+        
+        console.log('All Categories:', categoriesData)
         console.log('Products with relations:', productsData)
-        console.log('Categories data length:', categoryProductsData.data?.length)
+        console.log('Categories data length:', categoriesData.data?.length)
         
         // Build hierarchy from all categories
-        const allCategories = categoryProductsData.data || []
+        const allCategories = categoriesData.data || []
         const categoriesMap = new Map()
         const hierarchy = {}
         const rootCategories = []

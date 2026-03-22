@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
-import { promisify } from 'util'
+import clientPromise from '@/lib/mongodb'
+import { ObjectId } from 'mongodb'
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
-
-const dataDir = path.join(process.cwd(), 'src', 'data')
-const productsFile = path.join(dataDir, 'products.json')
+async function getDb() {
+  const client = await clientPromise
+  return client.db('chauchaublingstore')
+}
 
 // GET - Fetch products
 export async function GET(request) {
@@ -17,32 +15,38 @@ export async function GET(request) {
     const pageSize = parseInt(searchParams.get('pageSize') || '1000')
     const categorySlug = searchParams.get('category')
     
-    const fileData = await readFile(productsFile, 'utf8')
-    let { products } = JSON.parse(fileData)
+    const db = await getDb()
+    const collection = db.collection('products')
     
-    // Filter by category if provided
+    let query = {}
     if (categorySlug) {
-      products = products.filter(p => p.category?.slug === categorySlug)
+      query['category.slug'] = categorySlug
     }
+    
+    // Get total count
+    const total = await collection.countDocuments(query)
     
     // Pagination
     const startIndex = (page - 1) * pageSize
-    const endIndex = startIndex + pageSize
-    const paginatedProducts = products.slice(startIndex, endIndex)
+    const products = await collection.find(query)
+      .sort({ createdAt: -1 })
+      .skip(startIndex)
+      .limit(pageSize)
+      .toArray()
     
     return NextResponse.json({
-      data: paginatedProducts,
+      data: products,
       meta: {
         pagination: {
           page,
           pageSize,
-          pageCount: Math.ceil(products.length / pageSize),
-          total: products.length
+          pageCount: Math.ceil(total / pageSize),
+          total
         }
       }
     })
   } catch (error) {
-    console.error('Error reading products:', error)
+    console.error('Error fetching products:', error)
     return NextResponse.json(
       { error: 'Failed to fetch products' },
       { status: 500 }
@@ -55,13 +59,8 @@ export async function POST(request) {
   try {
     const body = await request.json()
     
-    // Read existing products
-    const fileData = await readFile(productsFile, 'utf8')
-    const data = JSON.parse(fileData)
-    
-    // Generate new ID
-    const maxId = Math.max(...data.products.map(p => parseInt(p.documentId) || 0), 0)
-    const newId = (maxId + 1).toString()
+    const db = await getDb()
+    const collection = db.collection('products')
     
     // Generate slug from name if not provided
     const slug = body.slug || body.name
@@ -70,7 +69,7 @@ export async function POST(request) {
       .replace(/^-+|-+$/g, '')
     
     // Check if slug already exists
-    const existingProduct = data.products.find(p => p.slug === slug)
+    const existingProduct = await collection.findOne({ slug })
     if (existingProduct) {
       return NextResponse.json(
         { error: 'Product with this slug already exists' },
@@ -80,7 +79,6 @@ export async function POST(request) {
     
     // Create new product
     const newProduct = {
-      documentId: newId,
       name: body.name,
       slug: slug,
       price: parseInt(body.price) || 0,
@@ -96,11 +94,9 @@ export async function POST(request) {
       updatedAt: new Date().toISOString()
     }
     
-    // Add to products array
-    data.products.push(newProduct)
-    
-    // Write back to file
-    await writeFile(productsFile, JSON.stringify(data, null, 2), 'utf8')
+    // Insert into MongoDB
+    const result = await collection.insertOne(newProduct)
+    newProduct._id = result.insertedId
     
     return NextResponse.json({
       data: newProduct

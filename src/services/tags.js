@@ -1,6 +1,11 @@
-import { localData } from '@/lib/local-data'
+import clientPromise from '@/lib/mongodb'
 
-// Tags are not currently stored in local data
+async function getDb() {
+  const client = await clientPromise
+  return client.db('chauchaublingstore')
+}
+
+// Tags are not currently stored in MongoDB
 // Return empty array for now - can be extended later if needed
 export async function getTags() {
   try {

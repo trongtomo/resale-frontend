@@ -3,8 +3,8 @@
 import MarkdownRenderer from './MarkdownRenderer'
 
 /**
- * ContentBlocks component - renamed from StrapiBlocks
- * Renders content blocks without requiring Strapi backend
+ * ContentBlocks component
+ * Renders content blocks from JSON data
  */
 export default function ContentBlocks({ blocks = [] }) {
   if (!blocks || blocks.length === 0) return null
@@ -12,7 +12,7 @@ export default function ContentBlocks({ blocks = [] }) {
   return (
     <div className="space-y-8">
       {blocks.map((block, index) => {
-        // Support both old Strapi format and new simplified format
+        // Support component type from different data formats
         const componentType = block.__component || block.type || block.component
         
         switch (componentType) {
@@ -104,6 +104,6 @@ export default function ContentBlocks({ blocks = [] }) {
   )
 }
 
-// Export as StrapiBlocks for backward compatibility
+// Export for backward compatibility
 export { ContentBlocks as StrapiBlocks }
 

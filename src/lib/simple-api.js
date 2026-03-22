@@ -1,37 +1,34 @@
-/**
- * Simple API client - now uses local data instead of GraphQL/Strapi
- */
+// src/lib/simple-api.js
+// Gọi qua API routes thay vì import mongodb trực tiếp
 
-import { localData } from './local-data'
-
-// Simple API functions - now using local data
 export const api = {
-  // Get all main categories (those with children)
-  getMainCategories: () => localData.getMainCategories(),
+  getMainCategories: () =>
+    fetch('/api/categories').then(r => r.json()).then(d => ({ categories: d.data || [] })),
 
-  // Get subcategories of a main category
-  getSubcategories: (parentSlug) => localData.getSubcategories(parentSlug),
+  getSubcategories: () => Promise.resolve({ categories: [] }),
 
-  // Get all categories (for navigation)
-  getAllCategories: () => localData.getAllCategories(),
+  getAllCategories: () =>
+    fetch('/api/categories').then(r => r.json()).then(d => ({ categories: d.data || [] })),
 
-  // Get products by category
-  getProductsByCategory: (categorySlug) => localData.getProductsByCategory(categorySlug),
+  getProductsByCategory: (categorySlug) =>
+    fetch(`/api/products?category=${categorySlug}`).then(r => r.json())
+      .then(d => ({ products: d.data || [] })),
 
-  // Get products by parent category (includes all subcategories)
-  getProductsByParentCategory: (parentCategorySlug) => localData.getProductsByParentCategory(parentCategorySlug),
+  getProductsByParentCategory: (parentCategorySlug) =>
+    fetch(`/api/products?category=${parentCategorySlug}`).then(r => r.json())
+      .then(d => ({ products: d.data || [] })),
 
-  // Get all products
-  getAllProducts: () => localData.getAllProducts(),
+  getAllProducts: () =>
+    fetch('/api/products').then(r => r.json()).then(d => ({ products: d.data || [] })),
 
-  // Get all brands
-  getBrands: () => localData.getAllBrands(),
+  getBrands: () =>
+    fetch('/api/brands').then(r => r.json()).then(d => ({ data: d.data || [] })),
 
-  // Get products by brand
-  getProductsByBrand: (brandSlug) => localData.getProductsByBrand(brandSlug),
+  getProductsByBrand: (brandSlug) =>
+    fetch(`/api/products?brand=${brandSlug}`).then(r => r.json())
+      .then(d => ({ products: d.data || [] })),
 
-  // Get single product
-  getProduct: (slug) => localData.getProductBySlug(slug).then(result => ({
-    products: result.data
-  })),
+  getProduct: (slug) =>
+    fetch(`/api/products/${slug}`).then(r => r.json())
+      .then(d => ({ products: d.data ? [d.data] : [] })),
 }

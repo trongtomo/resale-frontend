@@ -1,40 +1,40 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
-import { promisify } from 'util'
+import clientPromise from '@/lib/mongodb'
+import { ObjectId } from 'mongodb'
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
-
-const dataDir = path.join(process.cwd(), 'src', 'data')
-const brandsFile = path.join(dataDir, 'brands.json')
-const productsFile = path.join(dataDir, 'products.json')
+async function getDb() {
+  const client = await clientPromise
+  return client.db('chauchaublingstore')
+}
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
     const categoryId = searchParams.get('category')
     
-    const fileData = await readFile(brandsFile, 'utf8')
-    let { brands } = JSON.parse(fileData)
+    const db = await getDb()
+    const collection = db.collection('brands')
+    let brands
     
     // If category is provided, filter brands that have products in that category
     if (categoryId) {
-      const productsData = await readFile(productsFile, 'utf8')
-      const { products } = JSON.parse(productsData)
+      const productsCollection = db.collection('products')
       
       // Get brands that have products in this category
-      const categoryProducts = products.filter(p => 
-        p.category?.documentId === categoryId || p.category?.slug === categoryId
-      )
-      const brandIds = new Set(categoryProducts.map(p => p.brand?.documentId).filter(Boolean))
+      const categoryProducts = await productsCollection.find({
+        'category.documentId': categoryId,
+        'category.slug': categoryId
+      }).toArray()
       
-      brands = brands.filter(b => brandIds.has(b.documentId))
+      const brandIds = new Set(categoryProducts.map(p => p.brand?.documentId).filter(Boolean))
+      brands = await collection.find({ documentId: { $in: Array.from(brandIds) } }).toArray()
+    } else {
+      brands = await collection.find({}).toArray()
     }
     
     return NextResponse.json({ brands })
   } catch (error) {
-    console.error('Error reading brands:', error)
+    console.error('Error fetching brands:', error)
     return NextResponse.json(
       { error: 'Failed to fetch brands' },
       { status: 500 }
@@ -54,8 +54,8 @@ export async function POST(request) {
       )
     }
 
-    const fileData = await readFile(brandsFile, 'utf8')
-    const data = JSON.parse(fileData)
+    const db = await getDb()
+    const collection = db.collection('brands')
 
     // Generate slug from name
     const slug = name
@@ -64,7 +64,7 @@ export async function POST(request) {
       .replace(/^-+|-+$/g, '')
 
     // Check if slug already exists
-    const existingBrand = data.brands.find(b => b.slug === slug)
+    const existingBrand = await collection.findOne({ slug })
     if (existingBrand) {
       return NextResponse.json(
         { error: 'Brand with this name already exists' },
@@ -72,17 +72,7 @@ export async function POST(request) {
       )
     }
 
-    // Generate new ID
-    const maxId = data.brands.length > 0 
-      ? Math.max(...data.brands.map(b => {
-          const idMatch = b.documentId?.match(/brand(\d+)/)
-          return idMatch ? parseInt(idMatch[1]) : 0
-        }), 0)
-      : 0
-    const newId = `brand${maxId + 1}`
-
     const newBrand = {
-      documentId: newId,
       name: name.trim(),
       slug: slug,
       description: body.description || '',
@@ -90,8 +80,8 @@ export async function POST(request) {
       updatedAt: new Date().toISOString()
     }
 
-    data.brands.push(newBrand)
-    await writeFile(brandsFile, JSON.stringify(data, null, 2), 'utf8')
+    const result = await collection.insertOne(newBrand)
+    newBrand._id = result.insertedId
 
     return NextResponse.json({ data: newBrand }, { status: 201 })
   } catch (error) {

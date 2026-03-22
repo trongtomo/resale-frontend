@@ -1,6 +1,6 @@
 import qs from 'qs'
 
-// Use local API routes instead of external Strapi API
+// Use local API routes
 const API_BASE_URL = ''
 
 export function getApiUrl(path, query = {}) {

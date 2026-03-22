@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
-import { promisify } from 'util'
+import clientPromise from '@/lib/mongodb'
+import { ObjectId } from 'mongodb'
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
-
-const dataDir = path.join(process.cwd(), 'src', 'data')
-const articlesFile = path.join(dataDir, 'articles.json')
+async function getDb() {
+  const client = await clientPromise
+  return client.db('chauchaublingstore')
+}
 
 // GET - Fetch articles
 export async function GET(request) {
@@ -16,27 +14,33 @@ export async function GET(request) {
     const page = parseInt(searchParams.get('page') || '1')
     const pageSize = parseInt(searchParams.get('pageSize') || '9')
     
-    const fileData = await readFile(articlesFile, 'utf8')
-    const { articles } = JSON.parse(fileData)
+    const db = await getDb()
+    const collection = db.collection('articles')
+    
+    // Get total count
+    const total = await collection.countDocuments()
     
     // Pagination
     const startIndex = (page - 1) * pageSize
-    const endIndex = startIndex + pageSize
-    const paginatedArticles = articles.slice(startIndex, endIndex)
+    const articles = await collection.find({})
+      .sort({ createdAt: -1 })
+      .skip(startIndex)
+      .limit(pageSize)
+      .toArray()
     
     return NextResponse.json({
-      data: paginatedArticles,
+      data: articles,
       meta: {
         pagination: {
           page,
           pageSize,
-          pageCount: Math.ceil(articles.length / pageSize),
-          total: articles.length
+          pageCount: Math.ceil(total / pageSize),
+          total
         }
       }
     })
   } catch (error) {
-    console.error('Error reading articles:', error)
+    console.error('Error fetching articles:', error)
     return NextResponse.json(
       { error: 'Failed to fetch articles' },
       { status: 500 }
@@ -49,21 +53,8 @@ export async function POST(request) {
   try {
     const body = await request.json()
     
-    // Read existing articles
-    const fileData = await readFile(articlesFile, 'utf8')
-    const data = JSON.parse(fileData)
-    
-    // Ensure articles array exists
-    if (!data.articles || !Array.isArray(data.articles)) {
-      data.articles = []
-    }
-    
-    // Generate new ID
-    const articleIds = data.articles.length > 0
-      ? data.articles.map(a => parseInt(a.documentId?.replace('art', '') || '0') || 0)
-      : []
-    const maxId = articleIds.length > 0 ? Math.max(...articleIds) : 0
-    const newId = `art${maxId + 1}`
+    const db = await getDb()
+    const collection = db.collection('articles')
     
     // Generate slug from title if not provided
     const slug = body.slug || (body.title ? body.title
@@ -72,7 +63,7 @@ export async function POST(request) {
       .replace(/^-+|-+$/g, '') : '')
     
     // Check if slug already exists
-    const existingArticle = data.articles.find(a => a.slug === slug)
+    const existingArticle = await collection.findOne({ slug })
     if (existingArticle) {
       return NextResponse.json(
         { error: 'Article with this slug already exists' },
@@ -84,7 +75,6 @@ export async function POST(request) {
     
     // Create new article
     const newArticle = {
-      documentId: newId,
       title: body.title,
       slug: slug,
       content: body.content || '',
@@ -97,11 +87,9 @@ export async function POST(request) {
       updatedAt: now
     }
     
-    // Add to articles array
-    data.articles.push(newArticle)
-    
-    // Write back to file
-    await writeFile(articlesFile, JSON.stringify(data, null, 2), 'utf8')
+    // Insert into MongoDB
+    const result = await collection.insertOne(newArticle)
+    newArticle._id = result.insertedId
     
     return NextResponse.json({
       data: newArticle

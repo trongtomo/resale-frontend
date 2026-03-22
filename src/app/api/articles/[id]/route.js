@@ -1,22 +1,28 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
-import { promisify } from 'util'
+import clientPromise from '@/lib/mongodb'
+import { ObjectId } from 'mongodb'
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
-
-const dataDir = path.join(process.cwd(), 'src', 'data')
-const articlesFile = path.join(dataDir, 'articles.json')
+async function getDb() {
+  const client = await clientPromise
+  return client.db('chauchaublingstore')
+}
 
 // GET - Get single article by ID or slug
 export async function GET(request, { params }) {
   try {
     const { id } = await params
-    const fileData = await readFile(articlesFile, 'utf8')
-    const { articles } = JSON.parse(fileData)
+    const db = await getDb()
+    const collection = db.collection('articles')
     
-    const article = articles.find(a => a.documentId === id || a.slug === id)
+    let article
+    // Try to find by ObjectId first, then by slug
+    if (ObjectId.isValid(id)) {
+      article = await collection.findOne({ _id: new ObjectId(id) })
+    }
+    if (!article) {
+      // Add timeout for slug query and create index if needed
+      article = await collection.findOne({ slug: id }, { maxTimeMS: 5000 })
+    }
     
     if (!article) {
       return NextResponse.json(
@@ -27,7 +33,7 @@ export async function GET(request, { params }) {
     
     return NextResponse.json({ data: [article] })
   } catch (error) {
-    console.error('Error reading article:', error)
+    console.error('Error fetching article:', error)
     return NextResponse.json(
       { error: 'Failed to fetch article' },
       { status: 500 }
@@ -41,12 +47,18 @@ export async function PUT(request, { params }) {
     const { id } = await params
     const body = await request.json()
     
-    const fileData = await readFile(articlesFile, 'utf8')
-    const data = JSON.parse(fileData)
+    const db = await getDb()
+    const collection = db.collection('articles')
     
-    const articleIndex = data.articles.findIndex(a => a.documentId === id || a.slug === id)
+    let query
+    if (ObjectId.isValid(id)) {
+      query = { _id: new ObjectId(id) }
+    } else {
+      query = { slug: id }
+    }
     
-    if (articleIndex === -1) {
+    const existingArticle = await collection.findOne(query, { maxTimeMS: 5000 })
+    if (!existingArticle) {
       return NextResponse.json(
         { error: 'Article not found' },
         { status: 404 }
@@ -55,17 +67,22 @@ export async function PUT(request, { params }) {
     
     // Update article
     const updatedArticle = {
-      ...data.articles[articleIndex],
       ...body,
-      documentId: data.articles[articleIndex].documentId, // Preserve ID
       updatedAt: new Date().toISOString()
     }
     
-    data.articles[articleIndex] = updatedArticle
+    const result = await collection.updateOne(query, { $set: updatedArticle }, { maxTimeMS: 5000 })
     
-    await writeFile(articlesFile, JSON.stringify(data, null, 2), 'utf8')
+    if (result.matchedCount === 0) {
+      return NextResponse.json(
+        { error: 'Article not found' },
+        { status: 404 }
+      )
+    }
     
-    return NextResponse.json({ data: updatedArticle })
+    // Return updated article
+    const article = await collection.findOne(query, { maxTimeMS: 5000 })
+    return NextResponse.json({ data: article })
   } catch (error) {
     console.error('Error updating article:', error)
     return NextResponse.json(
@@ -79,22 +96,24 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     const { id } = await params
+    const db = await getDb()
+    const collection = db.collection('articles')
     
-    const fileData = await readFile(articlesFile, 'utf8')
-    const data = JSON.parse(fileData)
+    let query
+    if (ObjectId.isValid(id)) {
+      query = { _id: new ObjectId(id) }
+    } else {
+      query = { slug: id }
+    }
     
-    const articleIndex = data.articles.findIndex(a => a.documentId === id || a.slug === id)
+    const result = await collection.deleteOne(query, { maxTimeMS: 5000 })
     
-    if (articleIndex === -1) {
+    if (result.deletedCount === 0) {
       return NextResponse.json(
         { error: 'Article not found' },
         { status: 404 }
       )
     }
-    
-    data.articles.splice(articleIndex, 1)
-    
-    await writeFile(articlesFile, JSON.stringify(data, null, 2), 'utf8')
     
     return NextResponse.json({ message: 'Article deleted successfully' })
   } catch (error) {

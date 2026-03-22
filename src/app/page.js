@@ -22,16 +22,16 @@ export default async function Home() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
       {/* Hero Banner */}
-      <section className="relative bg-gray-900 text-white">
+      <section className="relative bg-gray-900 dark:bg-gray-950 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              Hot Deal Shoes
+              chauchaubling
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-300">
-              Find the best deals on shoes and more
+              Find the best deals on fashion, accessories and more
             </p>
             {categories.length > 0 ? (
               <Link
@@ -51,11 +51,11 @@ export default async function Home() {
 
       {/* Featured Products */}
       {products.length > 0 && (
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white dark:bg-gray-900 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Products</h2>
-              <p className="text-lg text-gray-600">Handpicked items just for you</p>
+              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Featured Products</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300">Handpicked fashion items just for you</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -63,9 +63,9 @@ export default async function Home() {
                 <Link
                   key={product.documentId}
                   href={`/products/${product.slug}`}
-                  className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 group"
+                  className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-xl dark:hover:shadow-gray-600 transition-all duration-300 group"
                 >
-                  <div className="aspect-square bg-gray-100 relative overflow-hidden">
+                  <div className="aspect-square bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
                     {product.images && product.images.length > 0 ? (
                       <Image
                         src={product.images[0]}
@@ -74,7 +74,7 @@ export default async function Home() {
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400">
+                      <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
                         <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
@@ -82,16 +82,16 @@ export default async function Home() {
                     )}
                   </div>
                   <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
                       {product.name}
                     </h3>
                     {product.shortDescription && (
-                      <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
                         {product.shortDescription}
                       </p>
                     )}
                     <div className="flex items-center justify-between">
-                      <span className="text-xl font-bold text-gray-900">
+                      <span className="text-xl font-bold text-gray-900 dark:text-white">
                         {formatCurrency(product.price)}
                       </span>
                     </div>
@@ -107,7 +107,7 @@ export default async function Home() {
               <div className="text-center mt-12">
                 <Link
                   href={`/products?category=${categories[0].slug}`}
-                  className="inline-block bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+                  className="inline-block bg-gray-900 dark:bg-gray-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors"
                 >
                   View All Products
                 </Link>
@@ -119,11 +119,11 @@ export default async function Home() {
 
       {/* Categories */}
       {categories.length > 0 && (
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-800 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Shop by Category</h2>
-              <p className="text-lg text-gray-600">Browse our collections</p>
+              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Shop by Category</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300">Browse our fashion collections</p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -131,13 +131,13 @@ export default async function Home() {
                 <Link
                   key={category.documentId}
                   href={`/products?category=${category.slug}`}
-                  className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-all duration-300 text-center group"
+                  className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-6 hover:shadow-lg dark:hover:shadow-gray-600 transition-all duration-300 text-center group"
                 >
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {category.name}
                   </h3>
                   {category.description && (
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">
                       {category.description}
                     </p>
                   )}
@@ -150,16 +150,16 @@ export default async function Home() {
 
       {/* Empty State */}
       {products.length === 0 && !error && (
-        <section className="py-32 bg-white">
+        <section className="py-32 bg-white dark:bg-gray-900 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Hot Deal Shoes</h2>
-            <p className="text-lg text-gray-600 mb-8">Find the best deals on shoes and more</p>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Products</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">Find the best deals on fashion, accessories and more</p>
             {categories.length > 0 && (
               <Link
                 href={`/products?category=${categories[0].slug}`}
-                className="inline-block bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+                className="inline-block bg-gray-900 dark:bg-gray-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors"
               >
-                Browse Shoes
+                Browse Fashion
               </Link>
             )}
           </div>

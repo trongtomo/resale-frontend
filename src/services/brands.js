@@ -1,4 +1,9 @@
-import { localData } from '@/lib/local-data'
+import clientPromise from '@/lib/mongodb'
+
+async function getDb() {
+  const client = await clientPromise
+  return client.db('chauchaublingstore')
+}
 
 // Cache for brands
 let brandsCache = null
@@ -12,13 +17,26 @@ export async function getBrands(categorySlug = null) {
   }
 
   try {
-    const data = await localData.getBrands(categorySlug)
+    const db = await getDb()
+    const col = db.collection('brands')
+    let brands
+
+    if (categorySlug) {
+      const productCol = db.collection('products')
+      const products = await productCol.find({ 'category.slug': categorySlug }).toArray()
+      const brandIds = [...new Set(products.map(p => p.brand?.documentId).filter(Boolean))]
+      brands = await col.find({ documentId: { $in: Array.from(brandIds) } }).maxTimeMS(3000).toArray()
+    } else {
+      brands = await col.find({}).maxTimeMS(3000).toArray()
+    }
+
+    const result = { data: brands }
     
     // Update cache
-    brandsCache = data
+    brandsCache = result
     brandsCacheTime = Date.now()
     
-    return data
+    return result
   } catch (error) {
     console.error('Error fetching brands:', error)
     // Return cached data if available, even if expired

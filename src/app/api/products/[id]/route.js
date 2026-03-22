@@ -1,22 +1,27 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
-import { promisify } from 'util'
+import clientPromise from '@/lib/mongodb'
+import { ObjectId } from 'mongodb'
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
+async function getDb() {
+  const client = await clientPromise
+  return client.db('chauchaublingstore')
+}
 
-const dataDir = path.join(process.cwd(), 'src', 'data')
-const productsFile = path.join(dataDir, 'products.json')
-
-// GET - Get single product by ID
+// GET - Get single product by ID or slug
 export async function GET(request, { params }) {
   try {
     const { id } = await params
-    const fileData = await readFile(productsFile, 'utf8')
-    const { products } = JSON.parse(fileData)
+    const db = await getDb()
+    const collection = db.collection('products')
     
-    const product = products.find(p => p.documentId === id || p.slug === id)
+    let product
+    // Try to find by ObjectId first, then by slug
+    if (ObjectId.isValid(id)) {
+      product = await collection.findOne({ _id: new ObjectId(id) })
+    }
+    if (!product) {
+      product = await collection.findOne({ slug: id })
+    }
     
     if (!product) {
       return NextResponse.json(
@@ -27,7 +32,7 @@ export async function GET(request, { params }) {
     
     return NextResponse.json({ data: [product] })
   } catch (error) {
-    console.error('Error reading product:', error)
+    console.error('Error fetching product:', error)
     return NextResponse.json(
       { error: 'Failed to fetch product' },
       { status: 500 }
@@ -41,12 +46,18 @@ export async function PUT(request, { params }) {
     const { id } = await params
     const body = await request.json()
     
-    const fileData = await readFile(productsFile, 'utf8')
-    const data = JSON.parse(fileData)
+    const db = await getDb()
+    const collection = db.collection('products')
     
-    const productIndex = data.products.findIndex(p => p.documentId === id || p.slug === id)
+    let query
+    if (ObjectId.isValid(id)) {
+      query = { _id: new ObjectId(id) }
+    } else {
+      query = { slug: id }
+    }
     
-    if (productIndex === -1) {
+    const existingProduct = await collection.findOne(query)
+    if (!existingProduct) {
       return NextResponse.json(
         { error: 'Product not found' },
         { status: 404 }
@@ -55,17 +66,22 @@ export async function PUT(request, { params }) {
     
     // Update product
     const updatedProduct = {
-      ...data.products[productIndex],
       ...body,
-      documentId: data.products[productIndex].documentId, // Preserve ID
       updatedAt: new Date().toISOString()
     }
     
-    data.products[productIndex] = updatedProduct
+    const result = await collection.updateOne(query, { $set: updatedProduct })
     
-    await writeFile(productsFile, JSON.stringify(data, null, 2), 'utf8')
+    if (result.matchedCount === 0) {
+      return NextResponse.json(
+        { error: 'Product not found' },
+        { status: 404 }
+      )
+    }
     
-    return NextResponse.json({ data: updatedProduct })
+    // Return updated product
+    const product = await collection.findOne(query)
+    return NextResponse.json({ data: product })
   } catch (error) {
     console.error('Error updating product:', error)
     return NextResponse.json(
@@ -79,22 +95,24 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     const { id } = await params
+    const db = await getDb()
+    const collection = db.collection('products')
     
-    const fileData = await readFile(productsFile, 'utf8')
-    const data = JSON.parse(fileData)
+    let query
+    if (ObjectId.isValid(id)) {
+      query = { _id: new ObjectId(id) }
+    } else {
+      query = { slug: id }
+    }
     
-    const productIndex = data.products.findIndex(p => p.documentId === id || p.slug === id)
+    const result = await collection.deleteOne(query)
     
-    if (productIndex === -1) {
+    if (result.deletedCount === 0) {
       return NextResponse.json(
         { error: 'Product not found' },
         { status: 404 }
       )
     }
-    
-    data.products.splice(productIndex, 1)
-    
-    await writeFile(productsFile, JSON.stringify(data, null, 2), 'utf8')
     
     return NextResponse.json({ message: 'Product deleted successfully' })
   } catch (error) {

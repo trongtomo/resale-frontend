@@ -9,8 +9,8 @@ import '@/styles/nprogress.css'
 import './globals.css'
 
 export const metadata = {
-  title: 'chauchaubling - Fashion & Accessories',
-  description: 'Your go-to spot for affordable, curated fashion and accessories',
+  title: 'chauchaubling - Fashion, Accessories & More',
+  description: 'Your go-to spot for affordable, curated fashion, accessories and more',
 }
 
 export default function RootLayout({ children }) {

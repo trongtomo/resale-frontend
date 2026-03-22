@@ -22,17 +22,19 @@ export async function GET(request) {
       
       // Get brands that have products in this category
       const categoryProducts = await productsCollection.find({
-        'category.documentId': categoryId,
-        'category.slug': categoryId
+        $or: [
+          { 'category._id': new ObjectId(categoryId) },
+          { 'category.slug': categoryId }
+        ]
       }).toArray()
       
-      const brandIds = new Set(categoryProducts.map(p => p.brand?.documentId).filter(Boolean))
-      brands = await collection.find({ documentId: { $in: Array.from(brandIds) } }).toArray()
+      const brandIds = new Set(categoryProducts.map(p => p.brand?._id).filter(Boolean))
+      brands = await collection.find({ _id: { $in: Array.from(brandIds) } }).toArray()
     } else {
       brands = await collection.find({}).toArray()
     }
     
-    return NextResponse.json({ brands })
+    return NextResponse.json({ data: brands })
   } catch (error) {
     console.error('Error fetching brands:', error)
     return NextResponse.json(

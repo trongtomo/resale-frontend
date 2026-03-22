@@ -160,7 +160,7 @@ export default async function Home() {
                 href={`/products?category=${categories[0].slug}`}
                 className="inline-block bg-gray-900 dark:bg-gray-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors"
               >
-                Browse Fashion
+                Browse more
               </Link>
             )}
           </div>

@@ -6,7 +6,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">chauchaubling</h3>
             <p className="text-gray-600 dark:text-gray-300 text-sm">
-              Your go-to spot for affordable, curated fashion and accessories.
+              Your go-to spot for affordable, curated fashion, accessories and more.
             </p>
           </div>
 

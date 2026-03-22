@@ -34,12 +34,12 @@ export default function CreateProductPage() {
     // Load categories and brands
     fetch('/api/categories')
       .then(res => res.json())
-      .then(data => setCategories(data.categories || []))
+      .then(data => setCategories(data.data || []))
       .catch(err => console.error('Error loading categories:', err))
 
     fetch('/api/brands')
       .then(res => res.json())
-      .then(data => setBrands(data.brands || []))
+      .then(data => setBrands(data.data || []))
       .catch(err => console.error('Error loading brands:', err))
   }, [])
 
@@ -89,7 +89,7 @@ export default function CreateProductPage() {
       if (response.ok) {
         const data = await response.json()
         setCategories([...categories, data.data])
-        setFormData(prev => ({ ...prev, category: data.data.documentId }))
+        setFormData(prev => ({ ...prev, category: data.data._id }))
         setNewCategory('')
       }
     } catch (error) {
@@ -111,7 +111,7 @@ export default function CreateProductPage() {
       if (response.ok) {
         const data = await response.json()
         setBrands([...brands, data.data])
-        setFormData(prev => ({ ...prev, brand: data.data.documentId }))
+        setFormData(prev => ({ ...prev, brand: data.data._id }))
         setNewBrand('')
       } else {
         const errorData = await response.json()
@@ -168,14 +168,14 @@ export default function CreateProductPage() {
 
     try {
       // Find selected category and brand objects
-      const selectedCategory = categories.find(c => c.documentId === formData.category)
-      const selectedBrand = brands.find(b => b.documentId === formData.brand)
+      const selectedCategory = categories.find(c => c._id === formData.category)
+      const selectedBrand = brands.find(b => b._id === formData.brand)
 
       const productData = {
         ...formData,
         price: parseInt(parseFormattedNumber(formData.price)) || 0,
-        category: selectedCategory || null,
-        brand: selectedBrand || null
+        category: selectedCategory ? selectedCategory._id : null,
+        brand: selectedBrand ? selectedBrand._id : null
       }
 
       const response = await fetch('/api/products', {
@@ -320,7 +320,7 @@ export default function CreateProductPage() {
                 >
                   <option value="">Select a category</option>
                   {categories.map(cat => (
-                    <option key={cat.documentId} value={cat.documentId}>
+                    <option key={cat._id} value={cat._id}>
                       {cat.name}
                     </option>
                   ))}
@@ -357,7 +357,7 @@ export default function CreateProductPage() {
                 >
                   <option value="">Select a brand</option>
                   {brands.map(brand => (
-                    <option key={brand.documentId} value={brand.documentId}>
+                    <option key={brand._id} value={brand._id}>
                       {brand.name}
                     </option>
                   ))}

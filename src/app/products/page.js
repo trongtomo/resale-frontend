@@ -4,7 +4,7 @@ import ProductGrid from '@/components/ProductGrid'
 
 export const metadata = {
   title: 'Products - chauchaubling',
-  description: 'Browse our collection of fashion items',
+  description: 'Browse our collection of items',
 }
 
 export default async function ProductsPage({ searchParams }) {

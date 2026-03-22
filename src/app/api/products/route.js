@@ -20,7 +20,13 @@ export async function GET(request) {
     
     let query = {}
     if (categorySlug) {
-      query['category.slug'] = categorySlug
+      // Try to find by ObjectId first (if it's an ID)
+      if (ObjectId.isValid(categorySlug)) {
+        query['category._id'] = new ObjectId(categorySlug)
+      } else {
+        // If not ObjectId, treat as slug
+        query['category.slug'] = categorySlug
+      }
     }
     
     // Get total count
@@ -34,8 +40,31 @@ export async function GET(request) {
       .limit(pageSize)
       .toArray()
     
+    // Populate category and brand data
+    const populatedProducts = await Promise.all(
+      products.map(async (product) => {
+        let populatedProduct = { ...product }
+        
+        // Populate category if it exists
+        if (product.category && product.category._id) {
+          const categoryCollection = db.collection('categories')
+          const category = await categoryCollection.findOne({ _id: product.category._id })
+          populatedProduct.category = category
+        }
+        
+        // Populate brand if it exists
+        if (product.brand && product.brand._id) {
+          const brandCollection = db.collection('brands')
+          const brand = await brandCollection.findOne({ _id: product.brand._id })
+          populatedProduct.brand = brand
+        }
+        
+        return populatedProduct
+      })
+    )
+    
     return NextResponse.json({
-      data: products,
+      data: populatedProducts,
       meta: {
         pagination: {
           page,
@@ -86,8 +115,12 @@ export async function POST(request) {
       shortDescription: body.shortDescription || body.description?.substring(0, 100) || '',
       content: body.content || '',
       status: body.status || 'active',
-      category: body.category || null,
-      brand: body.brand || null,
+      category: body.category ? {
+        _id: new ObjectId(body.category)
+      } : null,
+      brand: body.brand ? {
+        _id: new ObjectId(body.brand)
+      } : null,
       images: body.images || [],
       publishedAt: new Date().toISOString(),
       createdAt: new Date().toISOString(),

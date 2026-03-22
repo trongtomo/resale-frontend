@@ -30,7 +30,24 @@ export async function GET(request, { params }) {
       )
     }
     
-    return NextResponse.json({ data: [product] })
+    // Populate category and brand data
+    let populatedProduct = { ...product }
+    
+    // Populate category if it exists
+    if (product.category && product.category._id) {
+      const categoryCollection = db.collection('categories')
+      const category = await categoryCollection.findOne({ _id: product.category._id })
+      populatedProduct.category = category
+    }
+    
+    // Populate brand if it exists
+    if (product.brand && product.brand._id) {
+      const brandCollection = db.collection('brands')
+      const brand = await brandCollection.findOne({ _id: product.brand._id })
+      populatedProduct.brand = brand
+    }
+    
+    return NextResponse.json({ data: [populatedProduct] })
   } catch (error) {
     console.error('Error fetching product:', error)
     return NextResponse.json(
@@ -81,7 +98,25 @@ export async function PUT(request, { params }) {
     
     // Return updated product
     const product = await collection.findOne(query)
-    return NextResponse.json({ data: product })
+    
+    // Populate category and brand data
+    let populatedProduct = { ...product }
+    
+    // Populate category if it exists
+    if (product.category && product.category._id) {
+      const categoryCollection = db.collection('categories')
+      const category = await categoryCollection.findOne({ _id: product.category._id })
+      populatedProduct.category = category
+    }
+    
+    // Populate brand if it exists
+    if (product.brand && product.brand._id) {
+      const brandCollection = db.collection('brands')
+      const brand = await brandCollection.findOne({ _id: product.brand._id })
+      populatedProduct.brand = brand
+    }
+    
+    return NextResponse.json({ data: populatedProduct })
   } catch (error) {
     console.error('Error updating product:', error)
     return NextResponse.json(

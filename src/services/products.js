@@ -1,4 +1,5 @@
 import clientPromise from '@/lib/mongodb'
+import { ObjectId } from 'mongodb'
 
 async function getDb() {
   const client = await clientPromise
@@ -11,7 +12,15 @@ export async function getProducts(page = 1, pageSize = 12, filters = {}) {
     const col = db.collection('products')
     let query = { status: 'active' }
 
-    if (filters.category) query['category.slug'] = filters.category
+    if (filters.category) {
+      // Try to find by ObjectId first (if it's an ID)
+      if (ObjectId.isValid(filters.category)) {
+        query['category._id'] = new ObjectId(filters.category)
+      } else {
+        // If not ObjectId, treat as slug
+        query['category.slug'] = filters.category
+      }
+    }
     if (filters.selectedBrand) query['brand.documentId'] = filters.selectedBrand
     if (filters.priceMin || filters.priceMax) {
       query.price = {}

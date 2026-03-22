@@ -13,7 +13,7 @@ export async function GET() {
     const collection = db.collection('categories')
     const categories = await collection.find({}).toArray()
     
-    return NextResponse.json({ categories })
+    return NextResponse.json({ data: categories })
   } catch (error) {
     console.error('Error fetching categories:', error)
     return NextResponse.json(

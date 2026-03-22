@@ -98,7 +98,7 @@ export default async function ArticlePage({ params }) {
               src={article.cover.url}
               alt={article.cover.alternativeText || article.title}
               className="w-full object-cover"
-              style={{ maxHeight: '500px' }}
+              style={{ maxHeight: '300px' , objectFit: 'contain', opacity: 0.6}}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent flex items-end justify-center">
               <div className="text-center text-white max-w-4xl px-4 pb-8">
